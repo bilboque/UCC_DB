@@ -29,10 +29,18 @@ def home():
 def joueurs():
     return render_template("joueurs.html")
 
+@app.route("/joueur",methods=['GET'])
+def joueur():
+    return render_template("joueur.html")
 
 
 #api routes : /api/*
 @app.route("/api/joueurs",methods=['GET'])
-def films():
+def api_joueurs_infos():
     result = get_players(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/joueur/<id>")
+def api_joueur_infos(id):
+    result = get_player(connection,cursor,id)
     return jsonify(result)

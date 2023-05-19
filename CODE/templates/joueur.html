@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChessClub DataBase</title> <!--Texte qui apparait dans le nom de l'onglet -->
+
+    <!--Contient les styles CSS de cette page -->
+    <style>
+        body {
+            margin-left: 100px;
+            margin-right: 100px;
+            padding: 10px;
+            font-family: Helvetica,sans-serif;
+            background-color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid;
+            border-color: #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+        }
+
+        tr:hover {
+            background-color: #444;
+        }
+
+        /* Style CSS pour la barre de navigation */
+        .navbar {
+            background-color: #333; /* Couleur de fond de la barre de navigation */
+            overflow: hidden;
+        }
+
+        /* Style CSS pour les liens dans la barre de navigation */
+        .navbar a {
+            float: left;
+            color: #f2f2f2; /* Couleur du texte des liens */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        /* Style CSS pour les liens dans la barre de navigation au survol de la souris */
+        .navbar a:hover {
+            background-color: #ddd; /* Couleur de fond des liens au survol */
+            color: black; /* Couleur du texte des liens au survol */
+        }
+        
+        .main{
+            padding: 10px;
+            background-color: #333;
+            margin-top: 20px;
+            color: #f2f2f2;
+        }  
+
+        .logo {
+            float: left;
+            margin-right: 10px;
+            width: auto; 
+            height: 48px; 
+        }
+    </style>
+
+    <!--Contient le JavaScript que nous allons utiliser pour cette page -->
+    <script>
+        async function player_infos(id){
+            let url = '/api/joueur/' + id
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("infos_joueur").innerHTML ='<a><b>Infos de '+ data["nom"] + ' ' + data["prenom"] + ':</b></a></br>';
+            document.getElementById("infos_joueur").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"]
+        }
+
+        // appel lors du chargement de la page
+        window.onload = async function () {
+            // Obtention de l'URL actuelle
+            var url = window.location.href;
+            
+            // Récupération des paramètres de l'URL
+            var params = new URLSearchParams(new URL(url).search);
+
+            // Obtention de la valeur de l'argument "id"
+            var id = params.get("id");
+
+
+            await player_infos(id);
+            await games(id);
+        }
+
+    </script>
+
+</head>
+
+<!--Contient le corps de la page-->
+<body>
+    <div class="navbar">
+        <img src="/static/LOGO.jpeg" class="logo" >
+        <div>
+            <a href="/">Accueil</a>
+            <a href="/joueurs">Joueurs</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="infos" id="infos_joueur">
+            <a>espace pour afficher les infos du joueur</a>
+        </div>
+        <div class="infos" id="list_parties">
+            <h3>Liste des Parties:</h3>
+            <table id="game_table">
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -19,3 +19,19 @@ def get_players(conn,curs):
         resultat["data"].append(dico)
 
     return resultat
+
+def get_player(conn,curs,id):
+    mysql_query="""SELECT * FROM JOUEURS WHERE JoueurID=%s"""
+    curs.execute(mysql_query,(id,))
+    joueur = curs.fetchall()
+
+    resultat = {}
+
+    resultat["id"]=joueur[0][0]
+    resultat["prenom"]=joueur[0][1]
+    resultat["nom"]=joueur[0][2]
+    resultat["rating"]=joueur[0][3]
+    resultat["title"]=joueur[0][4]
+    resultat["club"]=joueur[0][5]
+
+    return resultat
