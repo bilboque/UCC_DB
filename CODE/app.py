@@ -20,9 +20,14 @@ app.secret_key = "secret_key"
 
 
 #main app pages
+
 @app.route("/",methods=['GET'])
 def home():
-    return render_template("front.html")
+    return render_template("home.html")
+
+@app.route("/joueurs",methods=['GET'])
+def joueurs():
+    return render_template("joueurs.html")
 
 
 
