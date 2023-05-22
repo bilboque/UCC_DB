@@ -79,10 +79,17 @@
 
             document.getElementById("player_table").innerHTML += '<tr><th> Nom </th><th> Prenom </th><th> Rating </th><th> Club </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
-                document.getElementById("player_table").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
             }
         }
 
+        function handleRowClick(event) {
+            // Get the URL to redirect to
+            var url = '/joueur?id=' + event; 
+
+            // Redirect the user to the new site
+            window.location.href = url;
+        }
         // appel lors du chargement de la page
         window.onload = async function () {
             await showAllPlayers();
