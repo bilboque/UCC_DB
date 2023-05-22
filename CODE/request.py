@@ -47,8 +47,8 @@ def get_game_played_by_id(conn,curs,id):
     for game in games:
         dico = {}
         dico["id"]=game[0]
-        dico["blanc"]=game[1]
-        dico["noir"]=game[2]
+        dico["blanc"]=game[2]
+        dico["noir"]=game[1]
         dico["date"]=game[3]
         dico["gagnant"]=game[4]
         dico["ouverture"]=game[5]
