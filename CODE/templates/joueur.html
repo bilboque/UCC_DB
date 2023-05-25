@@ -89,7 +89,7 @@
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("game_table").innerHTML += '<tr><th> Blanc </th><th> Noir </th><th> Date </th><th> Gagnant </th><th> Ouverture </th><th> Format </th></tr></br>';
+            document.getElementById("game_table").innerHTML += '<tr><th> Blanc </th><th> Noir </th><th> Nom Session </th><th> Gagnant </th><th> Ouverture </th><th> Format </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
                 document.getElementById("game_table").innerHTML +='<tr><td>' + data["data"][i]["blanc"] + '</td><td>' + data["data"][i]["noir"] + '</td><td>' + data["data"][i]["date"] + '</td><td>'+ data["data"][i]["gagnant"]+'</td><td>'+ data["data"][i]["ouverture"]+'</td><td>'+ data["data"][i]["format"]+'</td></tr></br>';
             }

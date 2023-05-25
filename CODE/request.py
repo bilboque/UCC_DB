@@ -37,7 +37,7 @@ def get_player(conn,curs,id):
     return resultat
 
 def get_game_played_by_id(conn,curs,id):
-    mysql_query="""SELECT gameId,black.Name,white.name,date,winner.Name,Ouverture,format FROM joueurs as winner, joueurs as black, joueurs as white,parties WHERE winner.JoueurID=Gagnant and black.JoueurID=noir and white.JoueurID=blanc and (noir=%s or blanc=%s)"""
+    mysql_query="""SELECT PartieID,black.Name,white.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""
     curs.execute(mysql_query,(id,id,))
     games = curs.fetchall()
 
@@ -47,12 +47,12 @@ def get_game_played_by_id(conn,curs,id):
     for game in games:
         dico = {}
         dico["id"]=game[0]
-        dico["blanc"]=game[2]
-        dico["noir"]=game[1]
-        dico["date"]=game[3]
-        dico["gagnant"]=game[4]
-        dico["ouverture"]=game[5]
-        dico["format"]=game[6]
+        dico["blanc"]=game[1]
+        dico["noir"]=game[2]
+        dico["date"]=game[6]
+        dico["gagnant"]=game[3]
+        dico["ouverture"]=game[4]
+        dico["format"]=game[5]
 
         resultat["data"].append(dico)
 
