@@ -37,7 +37,7 @@ def get_player(conn,curs,id):
     return resultat
 
 def get_game_played_by_id(conn,curs,id):
-    mysql_query="""SELECT PartieID,black.Name,white.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""
+    mysql_query="""SELECT PartieID,white.Name,black.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""
     curs.execute(mysql_query,(id,id,))
     games = curs.fetchall()
 
