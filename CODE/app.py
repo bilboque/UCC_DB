@@ -34,10 +34,15 @@ def joueur():
     return render_template("joueur.html")
 
 
-#api routes : /api/*
-@app.route("/api/joueurs",methods=['GET'])
-def api_joueurs_infos():
-    result = get_players(connection,cursor)
+#api routes : /api/joueurs
+@app.route("/api/joueurs/by_rating_DESC",methods=['GET'])
+def api_joueurs_rating_desc():
+    result = get_players_order_rating_DESC(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/joueurs/by_rating_AESC",methods=['GET'])
+def api_joueurs_aesc():
+    result = get_players_order_rating_AESC(connection,cursor)
     return jsonify(result)
 
 @app.route("/api/joueur/<id>")

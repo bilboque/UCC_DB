@@ -12,9 +12,9 @@
             padding: 10px;
             font-family: Helvetica,sans-serif;
             background-image: url("static/2D Chess set - Chessboard-18581.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-size: 100%; /* Couvre la largeur, mais pas la hauteur */
+            background-position: center top;
+            background-repeat: repeat;
         }
         table {
             width: 100%;
@@ -80,12 +80,35 @@
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
-        async function showAllPlayers(){
-            let url = '/api/joueurs'
+        async function showAllPlayers_Default(){
+            let url = '/api/joueurs/by_rating_DESC'
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("player_table").innerHTML += '<tr><th> Nom </th><th> Prenom </th><th> Rating </th><th> Club </th></tr></br>';
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating </th><th> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+        }
+
+        async function showAllPlayers_ratingAESC(){
+            let url = '/api/joueurs/by_rating_AESC'
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating ↓ </th><th> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+
+        }
+
+        async function showAllPlayers_ratingDESC(){
+            let url = '/api/joueurs/by_rating_DESC'
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating ↑ </th><th> Club </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
                 document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
             }
@@ -100,7 +123,7 @@
         }
         // appel lors du chargement de la page
         window.onload = async function () {
-            await showAllPlayers();
+            await showAllPlayers_Default();
         }
 
     </script>
