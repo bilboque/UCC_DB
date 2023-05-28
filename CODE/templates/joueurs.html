@@ -85,7 +85,7 @@
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating </th><th> Club </th></tr></br>';
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating </th><th onclick="showAllPlayers_clubAESC()"> Club </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
                 document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
             }
@@ -96,7 +96,7 @@
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating ↓ </th><th> Club </th></tr></br>';
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating ↓ </th><th onclick="showAllPlayers_clubAESC()"> Club </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
                 document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
             }
@@ -108,7 +108,29 @@
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating ↑ </th><th> Club </th></tr></br>';
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating ↑ </th><th onclick="showAllPlayers_clubAESC()"> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+        }
+
+        async function showAllPlayers_clubDESC(){
+            let url = '/api/joueurs/by_club_DESC'
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating </th><th onclick="showAllPlayers_clubAESC()"> Club ↑ </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+        }
+
+        async function showAllPlayers_clubAESC(){
+            let url = '/api/joueurs/by_club_AESC'
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("player_table").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingAESC()"> Rating </th><th onclick="showAllPlayers_clubDESC()"> Club ↓ </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
                 document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
             }

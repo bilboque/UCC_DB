@@ -41,8 +41,18 @@ def api_joueurs_rating_desc():
     return jsonify(result)
 
 @app.route("/api/joueurs/by_rating_AESC",methods=['GET'])
-def api_joueurs_aesc():
+def api_joueurs_order_rating_aesc():
     result = get_players_order_rating_AESC(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/joueurs/by_club_DESC",methods=['GET'])
+def api_joueurs_order_club_desc():
+    result = get_players_order_club_DESC(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/joueurs/by_club_AESC",methods=['GET'])
+def api_joueurs_order_club_aesc():
+    result = get_players_order_club_AESC(connection,cursor)
     return jsonify(result)
 
 @app.route("/api/joueur/<id>")
