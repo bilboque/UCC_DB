@@ -55,6 +55,16 @@ def api_joueurs_order_club_aesc():
     result = get_players_order_club_AESC(connection,cursor)
     return jsonify(result)
 
+@app.route("/api/joueurs/by_nom_DESC",methods=['GET'])
+def api_joueurs_order_nom_desc():
+    result = get_players_order_nom_DESC(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/joueurs/by_nom_AESC",methods=['GET'])
+def api_joueurs_order_nom_aesc():
+    result = get_players_order_nom_AESC(connection,cursor)
+    return jsonify(result)
+
 @app.route("/api/joueur/<id>")
 def api_joueur_infos(id):
     result = get_player(connection,cursor,id)
