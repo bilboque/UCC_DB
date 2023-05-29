@@ -120,7 +120,7 @@
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
-        async function player_infos(id){
+        async function tournois_infos(id){
             let url = '/api/joueur/' + id;
             let response = await fetch(url);
             let data = await response.json();
@@ -133,16 +133,15 @@
             document.getElementById("infos_joueur").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"] + ", Winrate: " + winrate +"</a>";
         }
 
-        async function games(id){
-            let url = '/api/gamesbyplayerid/' + id;
+        async function resultats_tournois(id){
+            let url = '/api/resultats_tournois/' + id;
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("game_table").innerHTML = '<tr><th> Blanc </th><th> Noir </th><th> Nom Session </th><th> Gagnant </th><th> Ouverture </th><th> Format </th></tr></br>';
+            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom du Tournois </th><th> Classement </th><th> Nombre de points </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
-                document.getElementById("game_table").innerHTML +='<tr><td>' + data["data"][i]["blanc"] + '</td><td>' + data["data"][i]["noir"] + '</td><td>' + data["data"][i]["date"] + '</td><td>'+ data["data"][i]["gagnant"]+'</td><td>'+ data["data"][i]["ouverture"]+'</td><td>'+ data["data"][i]["format"]+'</td></tr></br>';
+                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["tournoi"] + '</td><td>' + data["data"][i]["resultat"] + '</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
             }
-
         }
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
@@ -157,16 +156,6 @@
             }
 
         }
-        async function resultats_tournois(id){
-            let url = '/api/resultats_tournois/' + id;
-            let response = await fetch(url);
-            let data = await response.json();
-
-            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom du Tournois </th><th> Classement </th><th> Nombre de points </th></tr></br>';
-            for(i = 0; i < data["data"].length; i++){
-                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["tournoi"] + '</td><td>' + data["data"][i]["resultat"] + '</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
-            }
-        }
 
         // appel lors du chargement de la page
         window.onload = async function () {
@@ -180,9 +169,8 @@
             var id = params.get("id");
 
 
-            await player_infos(id);
-            await games(id);
-            await resultats_tournois(id);
+            //await tournois_infos(id);
+            //await resultats_tournois(id);
             await fill_dropdown();
         }
 
@@ -205,20 +193,6 @@
         </div>
     </div>
     <div class="main">
-        <div class="infos" id="infos_joueur">
-            <a>espace pour afficher les infos du joueur</a>
-        </div>
-        <div class="infos">
-            <h3>Resultats des Tournois</h3>
-            <table id="resultat_tournois">
-            </table>
-        </div>
-        <div class="infos" id="list_parties">
-            <h3>Liste des Parties:</h3>
-            <table id="game_table">
-            </table>
-
-        </div>
     </div>
 </body>
 </html>

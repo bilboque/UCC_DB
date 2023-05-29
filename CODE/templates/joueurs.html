@@ -61,6 +61,7 @@
         .navbar a:hover {
             background-color: #ddd; /* Couleur de fond des liens au survol */
             color: black; /* Couleur du texte des liens au survol */
+            cursor: pointer;
         }
         
         .main{
@@ -76,6 +77,56 @@
             width: auto; 
             height: 48px; 
         }
+        .SelectPlayerWithGames a{
+            float: left;
+            
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 17px;
+            border: none;
+            outline: none;
+            color: #f2f2f2;
+            padding: 14px 16px;
+            background-color: inherit;
+            margin: 0;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
@@ -158,6 +209,45 @@
             }
         }
 
+        async function showPlayersWithGames(){
+            let url = '/api/joueurs/with_games'
+            let response = await fetch(url);
+            let data = await response.json();
+
+
+            document.getElementById("player_table").innerHTML = '<tr><th  onclick="showAllPlayers_nomAESC()"> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating </th><th onclick="showAllPlayers_clubDESC()"> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+
+        }
+
+        async function showPlayersWithTitle(){
+            let url = '/api/joueurs/with_titles'
+            let response = await fetch(url);
+            let data = await response.json();
+
+
+            document.getElementById("player_table").innerHTML = '<tr><th  onclick="showAllPlayers_nomAESC()"> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating </th><th onclick="showAllPlayers_clubDESC()"> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+
+        }
+        async function fill_dropdown(){
+            let url = '/api/tournois_infos';
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.href = '/tournois?id='+data["data"][i]["id"];
+                option.textContent = data["data"][i]["nom"];
+                document.getElementById("drop_content").appendChild(option);
+            }
+
+        }
+
         function handleRowClick(event) {
             // Get the URL to redirect to
             var url = '/joueur?id=' + event; 
@@ -168,6 +258,7 @@
         // appel lors du chargement de la page
         window.onload = async function () {
             await showAllPlayers_Default();
+            await fill_dropdown();
         }
 
     </script>
@@ -181,11 +272,22 @@
         <div>
             <a href="/">Accueil</a>
             <a href="/joueurs">Joueurs</a>
+            <div class="dropdown">
+                <button class="dropbtn">Tournois</button>
+                <div class="dropdown-content" id="drop_content">
+                </div>
+            </div>
         </div>
     </div>
     <div class="main">
         <div class="infos" id="all_players">
             <h3>Liste des Joueurs</h3>
+
+            <div class="navbar">
+                <a onclick="showPlayersWithGames()">Joueurs Actifs</a>
+                <a onclick="showPlayersWithTitle()">Joueurs Titrés</a>
+            </div>
+
             <table id="player_table">
             </table>
         </div>
