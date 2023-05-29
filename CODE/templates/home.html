@@ -72,10 +72,74 @@
             padding: 10px;
              /* Ajustez la hauteur selon vos besoins */
         }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: #f2f2f2;
+            padding: 14px 16px;
+            background-color: inherit;
+            margin: 0;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
+
+        async function fill_dropdown(){
+            let url = '/api/tournois_infos';
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.href = '/tournois?id='+data["data"][i]["id"];
+                option.textContent = data["data"][i]["nom"];
+                document.getElementById("drop_content").appendChild(option);
+            }
+
+        }
+
+        window.onload = async function () {
+            await fill_dropdown();
+        }
 
     </script>
 
@@ -88,6 +152,11 @@
         <div>
             <a href="/">Accueil</a>
             <a href="/joueurs">Joueurs</a>
+            <div class="dropdown">
+                <button class="dropbtn">Tournois</button>
+                <div class="dropdown-content" id="drop_content">
+                </div>
+            </div>
         </div>
     </div>
     <div class="video-container">

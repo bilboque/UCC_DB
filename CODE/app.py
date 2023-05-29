@@ -33,6 +33,10 @@ def joueurs():
 def joueur():
     return render_template("joueur.html")
 
+@app.route("/tournois",methods=['GET'])
+def tournois():
+    return render_template("tournois.html")
+
 
 #api routes : /api/joueurs
 @app.route("/api/joueurs/by_rating_DESC",methods=['GET'])
@@ -93,4 +97,14 @@ def api_get_winrate(id):
 @app.route("/api/resultats_tournois/<id>")
 def api_get_resultats_joueurs(id):
     result=get_resultat_player(connection,cursor,id)
+    return jsonify(result)
+
+@app.route("/api/tournoi/<id>")
+def api_get_resultats_tournois(id):
+    result=get_tournament_result(connection,cursor,id)
+    return jsonify(result)
+
+@app.route("/api/tournois_infos")
+def api_get_tournois_info():
+    result=get_tournament_infos(connection,cursor)
     return jsonify(result)

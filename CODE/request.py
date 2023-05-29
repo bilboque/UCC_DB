@@ -268,3 +268,21 @@ def get_tournament_result(conn,curs,id):
         resultat["data"].append(dico)
 
     return resultat
+
+def get_tournament_infos(conn,curs):
+    mysql_query="""SELECT SessionID,Nom,Date from sessions where Type='Tournoi' order by Date;"""
+    curs.execute(mysql_query)
+    tournaments = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for tournament in tournaments:
+        dico = {}
+        dico["id"]=tournament[0]
+        dico["nom"]=tournament[1]
+        dico["date"]=tournament[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
