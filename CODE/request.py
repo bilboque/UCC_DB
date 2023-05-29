@@ -249,7 +249,7 @@ def get_resultat_player(conn,curs,id):
     return resultat
 
 def get_tournament_result(conn,curs,id):
-    mysql_query="""Select Name,Surname,Nom,`Rank`,Points from\
+    mysql_query="""Select Name,Surname,Nom,`Rank`,Points,Date from\
           resultats,joueurs,sessions where resultats.JoueurID=joueurs.JoueurID and sessions.SessionID=resultats.SessionID and resultats.SessionID=%s  order by Date DESC ,`Rank`;"""
     curs.execute(mysql_query,(id,))
     tournaments = curs.fetchall()
@@ -264,6 +264,7 @@ def get_tournament_result(conn,curs,id):
         dico["tournoi"]=tournament[2]
         dico["resultat"]=tournament[3]
         dico["points"]=tournament[4]
+        dico["date"]=tournament[5]
 
         resultat["data"].append(dico)
 

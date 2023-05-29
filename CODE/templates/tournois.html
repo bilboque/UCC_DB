@@ -121,26 +121,22 @@
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
         async function tournois_infos(id){
-            let url = '/api/joueur/' + id;
+            let url = '/api/tournoi/' + id;
             let response = await fetch(url);
             let data = await response.json();
 
-            let winrate_url = '/api/winrate/' + id
-            let winrate_ans = await fetch(winrate_url);
-            let winrate = await winrate_ans.json();
 
-            document.getElementById("infos_joueur").innerHTML ='<a><b>Infos de '+ data["nom"] + ' ' + data["prenom"] + ':</b></a></br>';
-            document.getElementById("infos_joueur").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"] + ", Winrate: " + winrate +"</a>";
+            document.getElementById("infos_tournois").innerHTML ='<a><b>'+ data["data"][0]["tournoi"] + ', ' + data["data"][0]["date"] + '</b></a></br>';
         }
 
         async function resultats_tournois(id){
-            let url = '/api/resultats_tournois/' + id;
+            let url = '/api/tournoi/' + id;
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom du Tournois </th><th> Classement </th><th> Nombre de points </th></tr></br>';
+            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th> Classement </th><th> Nombre de points </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
-                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["tournoi"] + '</td><td>' + data["data"][i]["resultat"] + '</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
+                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["resultat"] +'</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
             }
         }
         async function fill_dropdown(){
@@ -172,6 +168,8 @@
             //await tournois_infos(id);
             //await resultats_tournois(id);
             await fill_dropdown();
+            await tournois_infos(id);
+            await resultats_tournois(id);
         }
 
     </script>
@@ -193,6 +191,13 @@
         </div>
     </div>
     <div class="main">
+        <h4>INFOS TOURNOIS:</h4>
+        <div id="infos_tournois">
+        </div>
+        <div>
+            <table id="resultat_tournois">
+            </table>
+        </div>
     </div>
 </body>
 </html>
