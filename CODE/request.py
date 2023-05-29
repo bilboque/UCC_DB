@@ -216,3 +216,14 @@ def get_game_played_by_id(conn,curs,id):
         resultat["data"].append(dico)
 
     return resultat
+
+def get_player_winrate(conn,curs,id):
+    mysql_query="""SELECT NB_WIN/(NB_W+NB_B) as WINRATE FROM \
+        (SELECT COUNT(*) AS NB_W,WHITE FROM parties where white=%s GROUP BY white ORDER BY COUNT(*) DESC) AS W,\
+        (SELECT COUNT(*) AS NB_B,BLACK FROM parties where black=%s GROUP BY BLACK ORDER BY COUNT(*) DESC) as B,\
+        (SELECT COUNT(*) AS NB_WIN,gagnant FROM parties where gagnant=%s GROUP BY gagnant ORDER BY COUNT(*) DESC) as WIN;"""
+    curs.execute(mysql_query,(id,id,id,))
+    winrate = curs.fetchall()
+
+
+    return winrate

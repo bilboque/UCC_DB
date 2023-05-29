@@ -76,16 +76,20 @@
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
         async function player_infos(id){
-            let url = '/api/joueur/' + id
+            let url = '/api/joueur/' + id;
             let response = await fetch(url);
             let data = await response.json();
 
+            let winrate_url = '/api/winrate/' + id
+            let winrate_ans = await fetch(winrate_url);
+            let winrate = await winrate_ans.json();
+
             document.getElementById("infos_joueur").innerHTML ='<a><b>Infos de '+ data["nom"] + ' ' + data["prenom"] + ':</b></a></br>';
-            document.getElementById("infos_joueur").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"]
+            document.getElementById("infos_joueur").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"] + ", Winrate: " + winrate +"</a>";
         }
 
         async function games(id){
-            let url = '/api/gamesbyplayerid/' + id
+            let url = '/api/gamesbyplayerid/' + id;
             let response = await fetch(url);
             let data = await response.json();
 

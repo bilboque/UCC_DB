@@ -84,3 +84,8 @@ def api_joueur_infos(id):
 def api_games_by_player_id(id):
     result=get_game_played_by_id(connection,cursor,id)
     return jsonify(result)
+
+@app.route("/api/winrate/<id>")
+def api_get_winrate(id):
+    result=get_player_winrate(connection,cursor,id)
+    return jsonify(result)
