@@ -225,5 +225,46 @@ def get_player_winrate(conn,curs,id):
     curs.execute(mysql_query,(id,id,id,))
     winrate = curs.fetchall()
 
-
     return winrate
+
+def get_resultat_player(conn,curs,id):
+    mysql_query="""Select Name,Surname,Nom,`Rank`,Points from\
+          resultats,joueurs,sessions where resultats.JoueurID=joueurs.JoueurID and sessions.SessionID=resultats.SessionID and joueurs.JoueurID=%s order by Date DESC ,`Rank`;"""
+    curs.execute(mysql_query,(id,))
+    tournaments = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for tournament in tournaments:
+        dico = {}
+        dico["nom"]=tournament[0]
+        dico["prenom"]=tournament[1]
+        dico["tournoi"]=tournament[2]
+        dico["resultat"]=tournament[3]
+        dico["points"]=tournament[4]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_tournament_result(conn,curs,id):
+    mysql_query="""Select Name,Surname,Nom,`Rank`,Points from\
+          resultats,joueurs,sessions where resultats.JoueurID=joueurs.JoueurID and sessions.SessionID=resultats.SessionID and resultats.SessionID=%s  order by Date DESC ,`Rank`;"""
+    curs.execute(mysql_query,(id,))
+    tournaments = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for tournament in tournaments:
+        dico = {}
+        dico["nom"]=tournament[0]
+        dico["prenom"]=tournament[1]
+        dico["tournoi"]=tournament[2]
+        dico["resultat"]=tournament[3]
+        dico["points"]=tournament[4]
+
+        resultat["data"].append(dico)
+
+    return resultat

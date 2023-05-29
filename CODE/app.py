@@ -89,3 +89,8 @@ def api_games_by_player_id(id):
 def api_get_winrate(id):
     result=get_player_winrate(connection,cursor,id)
     return jsonify(result)
+
+@app.route("/api/resultats_tournois/<id>")
+def api_get_resultats_joueurs(id):
+    result=get_resultat_player(connection,cursor,id)
+    return jsonify(result)
