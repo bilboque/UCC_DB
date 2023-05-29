@@ -61,6 +61,7 @@
         .navbar a:hover {
             background-color: #ddd; /* Couleur de fond des liens au survol */
             color: black; /* Couleur du texte des liens au survol */
+            cursor: pointer;
         }
         
         .main{
@@ -76,6 +77,11 @@
             width: auto; 
             height: 48px; 
         }
+        .SelectPlayerWithGames a{
+            float: left;
+            
+        }
+
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
@@ -158,6 +164,32 @@
             }
         }
 
+        async function showPlayersWithGames(){
+            let url = '/api/joueurs/with_games'
+            let response = await fetch(url);
+            let data = await response.json();
+
+
+            document.getElementById("player_table").innerHTML = '<tr><th  onclick="showAllPlayers_nomAESC()"> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating </th><th onclick="showAllPlayers_clubDESC()"> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+
+        }
+
+        async function showPlayersWithTitle(){
+            let url = '/api/joueurs/with_titles'
+            let response = await fetch(url);
+            let data = await response.json();
+
+
+            document.getElementById("player_table").innerHTML = '<tr><th  onclick="showAllPlayers_nomAESC()"> Nom </th><th> Prenom </th><th onclick="showAllPlayers_ratingDESC()"> Rating </th><th onclick="showAllPlayers_clubDESC()"> Club </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("player_table").innerHTML +='<tr onclick="handleRowClick('+ data["data"][i]["id"] + ')"><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["rating"] + '</td><td>'+ data["data"][i]["club"]+'</td></tr></br>';
+            }
+
+        }
+
         function handleRowClick(event) {
             // Get the URL to redirect to
             var url = '/joueur?id=' + event; 
@@ -186,6 +218,12 @@
     <div class="main">
         <div class="infos" id="all_players">
             <h3>Liste des Joueurs</h3>
+
+            <div class="navbar">
+                <a onclick="showPlayersWithGames()">Joueurs Actifs</a>
+                <a onclick="showPlayersWithTitle()">Joueurs Titrés</a>
+            </div>
+
             <table id="player_table">
             </table>
         </div>

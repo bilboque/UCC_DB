@@ -87,7 +87,7 @@ def get_players_order_club_AESC(conn,curs):
     return resultat
 
 def get_players_order_nom_DESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY SURNAME DESC,RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' ORDER BY SURNAME DESC,RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -109,7 +109,7 @@ def get_players_order_nom_DESC(conn,curs):
     return resultat
 
 def get_players_order_nom_AESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY SURNAME,RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' ORDER BY SURNAME,RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -130,6 +130,54 @@ def get_players_order_nom_AESC(conn,curs):
 
     return resultat
 
+def get_players_with_Title(conn,curs):
+    mysql_query="""SELECT * FROM JOUEURS WHERE TITLE<>'NONE' ORDER BY RATING DESC """
+    curs.execute(mysql_query)
+    joueurs = curs.fetchall()
+
+    resultat = {}
+
+    resultat["data"]=[]
+
+    for joueurs in joueurs:
+        dico = {}
+        dico["id"]=joueurs[0]
+        dico["prenom"]=joueurs[1]
+        dico["nom"]=joueurs[2]
+        dico["rating"]=joueurs[3]
+        dico["title"]=joueurs[4]
+        dico["club"]=joueurs[5]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_players_with_Games(conn,curs):
+    mysql_query="""SELECT JoueurID, Name, Surname, Rating, Title, Club,(NB_W+NB_B) AS NB_PARTIES \
+        FROM (SELECT COUNT(*) AS NB_W,WHITE FROM parties GROUP BY white ORDER BY COUNT(*) DESC) AS W,\
+            (SELECT COUNT(*) AS NB_B,BLACK FROM parties GROUP BY BLACK ORDER BY COUNT(*) DESC) AS B, joueurs \
+        WHERE W.white=B.BLACK AND W.white=JoueurID ORDER BY NB_PARTIES DESC"""
+    curs.execute(mysql_query)
+    joueurs = curs.fetchall()
+
+    resultat = {}
+
+    resultat["data"]=[]
+
+    for joueurs in joueurs:
+        dico = {}
+        dico["id"]=joueurs[0]
+        dico["prenom"]=joueurs[1]
+        dico["nom"]=joueurs[2]
+        dico["rating"]=joueurs[3]
+        dico["title"]=joueurs[4]
+        dico["club"]=joueurs[5]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+
 def get_player(conn,curs,id):
     mysql_query="""SELECT * FROM JOUEURS WHERE JoueurID=%s"""
     curs.execute(mysql_query,(id,))
@@ -147,7 +195,8 @@ def get_player(conn,curs,id):
     return resultat
 
 def get_game_played_by_id(conn,curs,id):
-    mysql_query="""SELECT PartieID,white.Name,black.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""
+    mysql_query="""SELECT PartieID,white.Name,black.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions \
+        WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""
     curs.execute(mysql_query,(id,id,))
     games = curs.fetchall()
 
