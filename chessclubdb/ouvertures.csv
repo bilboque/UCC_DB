@@ -1,64 +1,64 @@
-Alekhine defense,Alekhine,B02
-Benoni defense,Benoni,A56
-Bird opening,Bird,A02
-Bishop opening,Bishop opening,C23
-Bongcould,Bongcloud,B00
-Caro-Kann defense,Caro,B10
-Catalan opening,Catalane,E00
-Center game,Center game,C21
-Colle system,Colle,D05
-Dutch defense,Hollandaise,A80
-English opening,Anglaise,A10
-English opening - Indian defense,Anglaise,A15
-English opening - Reversed sicilian,Anglaise,A20
-English opening - Symmetrical english,Anglaise,A30
-Four knights game,4 cavaliers,C46
-Four knights game - Four knights scotch,4 cavaliers,C47
-Four knights game - Spanish variation,Espagnole des 4 cavaliers,C48
-French defense,Française,C00
-Grob opening,Grob,A00
-Grünfeld defense,Grünfeld,D80
-Italian opening,Italienne,C50
-Italian opening - Giuoco pianissimo,Giuoco pianissimo,C50
-Italian opening - Giuoco piano,Giuoco piano,C54
-Jobava London system,Jobava,D02
-Kings gambit,Gambit roi,C30
-Kings Indian attack,KIA,A07
-Kings Indian defense,KID,E70
-London system,London,D02
-Matsuo attack,Matsuo attack,A00
-Matsuo defense,Matsuo defense,A00
-Nimzo-Indian defense,Nimzo,E20
-Nimzo-Larsen opening,Cow-boy,A01
-Petrov defense,Petrov,C42
-Petrov defense - Stafford Gambit,Stafford,C42
-Philidor defense,Philidor,C41
-Polish attack,Orangutan,A00
-Polish defense,Orangutan,A40
-Queens gambit - Cambridge Springs variation,Cambridge Springs,D52
-Queens gambit - Semi-slav defense,Semi slave,D43
-Queens gambit - Slav defense,Slave,D10
-Queens gambit accepted,QGA,D20
-Queens gambit declined,QGD,D30
-Queens gambit declined - Exchange variation,Exchange QGD,D36
-Queens gambit declined - Ragozin variation,Ragozin,D38
-Reti opening,Reti,A04
-Ruy Lopez,Espagnole,C60
-Ruy Lopez - Berlin defense,Berlinoise ,C65
-Ruy Lopez - Exchange variation,Espagnole échange,C68
-Ruy Lopez - Mainline,Espagnole,C70
-Scandinavian defense,Scandi,B01
-Scotch game,Ecossaise,C44
-Scotch game - Mainline,Ecossaise,C45
-Sicilian defense,Sicilienne,B27
-Sicilian defense - Alapin variation,Alapine,B22
-Sicilian defense - Bowdler attack,Bowdler,B20
-Sicilian defense - Kalashnikov variation,Kalash,B32
-Sicilian defense - Najdorf variation,Najdorf,B90
-Sicilian defense - Rossolimo variation,Rosso,B30
-Sicilian defense - Smith Morra gambit,Smith Morra,B21
-Sicilian defense - Sveshnikov variation,Sveshnikov,B33
-Sodium attack,Sodium,A00
-Vienna game,Viennoise,C25
-Vienna game - Frankenstein-Dracula Variation,Frankenstein Dracula,C27
-Vienna game - Vienna gambit,Gambit viennois,C29
+Alekhine defense,Alekhine defense - 1.e4,B02
+Benoni defense,Benoni defense - 1.d4 - Indian - Indienne,A56
+Bird opening,Bird opening - 1.rare,A02
+Bishop opening,Bishop opening - 1.e4,C23
+Bongcould,Bongcloud - 1.e4,B00
+Caro-Kann defense,Caro kann - 1.e4 - Caro-Kann defense,B10
+Catalan opening,Catalane - 1.d4 - Catalan opening,E00
+Center game,Center game - 1.e4 - 1...e5,C21
+Colle system,Colle system - 1.d4 - Système colle,D05
+Dutch defense,Hollandaise - 1.d4 - Dutch defense,A80
+English opening,Anglaise - 1.c4 - English opening,A10
+English opening - Indian defense,Anglaise - 1.c4 - English opening - Indian defense,A15
+English opening - Reversed sicilian,Anglaise - 1.c4 - English opening - Reversed sicilian,A20
+English opening - Symmetrical english,Anglaise - 1.c4 - English opening - Symmetrical english,A30
+Four knights game,4 cavaliers - 1.e4 - Four knights game - 1...e5,C46
+Four knights game - Four knights scotch,écossaise des 4 cavaliers - 1.e4 - Four knights game - Four knights scotch - 1...e5,C47
+Four knights game - Spanish variation,Espagnole des 4 cavaliers - 1.e4 - Four knights game - Spanish variation -  - 1...e5,C48
+French defense,Française - 1.e4 - French defense,C00
+Grob opening,Grob opening - 1.rare,A00
+Grünfeld defense,Grünfeld defense - 1.d4 - Indian - Indienne,D80
+Italian opening,Italienne - 1.e4 - Italian opening - 1...e5,C50
+Italian opening - Giuoco pianissimo,Italienne - 1.e4 - Italian opening - Giuoco pianissimo - 1...e5,C50
+Italian opening - Giuoco piano,Italienne - 1.e4 - Italian opening - Giuoco piano - 1...e5,C54
+Jobava London system,Jobava London system - 1.d4 - Londres,D02
+Kings gambit,Gambit roi - 1.e4 - Kings gambit - 1...e5,C30
+Kings Indian attack,KIA - 1.Nf3 - Kings Indian attack - Attaque est indienne,A07
+Kings Indian defense,KID - 1.d4 - Defense est indienne - Kings Indian defense - Indian - Indienne,E70
+London system,Londres - 1.d4 - London system,D02
+Matsuo attack,Matsuo attack - 1.rare,A00
+Matsuo defense,Matsuo defense - 1.e4 - 1.d4 - 1.c4 - 1.Nf3 - 1.rare,A00
+Nimzo-Indian defense,Nimzo-Indian defense - 1.d4 - Indienne,E20
+Nimzo-Larsen opening,Cow-boy - 1.rare - Nimzo-Larsen opening,A01
+Petrov defense,Petrov defense - 1.e4 - Petroff - 1...e5,C42
+Petrov defense - Stafford Gambit,Stafford - 1.e4 - Petrov defense - Stafford Gambit - Petroff - 1...e5,C42
+Philidor defense,Philidor defense - 1.e4 - 1...e5,C41
+Polish attack,Orangutan - 1.rare - Polonaise - Polish attack,A00
+Polish defense,Orangutan  - 1.e4 - 1.d4 - 1.Nf3 - 1.rare - Polonaise - Polish defense,A40
+Queens gambit - Cambridge Springs variation,Cambridge Springs - 1.d4 - Semi slave - Gambit dame - Queens gambit - Cambridge Springs variation,D52
+Queens gambit - Semi-slav defense,Semi slave - 1.d4 - Gambit dame - Queens gambit - Semi-slav defense,D43
+Queens gambit - Slav defense,Slave - 1.d4 - Gambit dame - Queens gambit - Slav defense,D10
+Queens gambit accepted,QGA - 1.d4 - Gambit dame accepté - Queens gambit accepted,D20
+Queens gambit declined,QGD - 1.d4 - Gambit dame refusé - Queens gambit declined,D30
+Queens gambit declined - Exchange variation,Exchange QGD - 1.d4 - Gambit dame refusé - Gambit dame échange,D36
+Queens gambit declined - Ragozin variation,Ragozin - 1.d4 - Gambit dame refusé - Queens gambit declined - Ragozin variation,D38
+Reti opening,Reti opening - 1.Nf3 - Début Réti,A04
+Ruy Lopez,Espagnole - 1.e4 - Ruy Lopez - 1...e5,C60
+Ruy Lopez - Berlin defense,Berlinoise - 1.e4 - Espagnole - Ruy Lopez - Berlin defense - 1...e5,C65
+Ruy Lopez - Exchange variation,Espagnole échange - 1.e4 - Ruy Lopez - Exchange variation - 1...e5,C68
+Ruy Lopez - Mainline,Espagnole - 1.e4 - Ruy Lopez - Mainline - 1...e5,C70
+Scandinavian defense,Scandi - 1.e4 - Scandinave - Scandinavian defense,B01
+Scotch game,Ecossaise - 1.e4 - Scotch game - 1...e5,C44
+Scotch game - Mainline,Ecossaise - 1.e4 - Scotch game - Mainline - 1...e5,C45
+Sicilian defense,Sicilienne - 1.e4 - Sicilian defense,B27
+Sicilian defense - Alapin variation,Alapine - 1.e4 - Sicilienne - Sicilian defense - Alapin variation,B22
+Sicilian defense - Bowdler attack,Bowdler - 1.e4 - Sicilienne - Sicilian defense - Bowdler attack,B20
+Sicilian defense - Kalashnikov variation,Kalash - 1.e4 - Sicilienne ouverte - Sicilian defense - Kalashnikov variation,B32
+Sicilian defense - Najdorf variation,Najdorf - 1.e4 - Sicilienne ouverte - Sicilian defense - Najdorf variation,B90
+Sicilian defense - Rossolimo variation,Rosso - 1.e4 - Sicilienne - Sicilian defense - Rossolimo variation,B30
+Sicilian defense - Smith Morra gambit,Smith Morra - 1.e4 - Sicilienne - Sicilian defense - Smith Morra gambit,B21
+Sicilian defense - Sveshnikov variation,Sveshnikov - 1.e4 - Sicilienne ouverte - Sicilian defense - Sveshnikov variation,B33
+Sodium attack,Sodium attack - 1.rare - 1.Na3,A00
+Vienna game,Viennoise - 1.e4 - Vienne - Vienna game - 1...e5,C25
+Vienna game - Frankenstein-Dracula Variation,Frankenstein Dracula - 1.e4 - Vienne - Vienna game - Frankenstein-Dracula Variation - 1...e5,C27
+Vienna game - Vienna gambit,Gambit viennois - 1.e4 - Vienne - Vienna game - Vienna gambit - 1...e5,C29
