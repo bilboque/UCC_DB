@@ -149,6 +149,20 @@
             line-height: 1.5;
             color: #fff;
         }
+
+        .lien {
+            /* Ajoutez ici les styles souhaités pour la balise <a> */
+            color: white; /* Exemple de couleur de texte */
+            padding: 10px;
+            text-decoration: none; /* Exemple de suppression du soulignement */
+            font-weight: bold; /* Exemple de graisse de police */
+            /* Ajoutez d'autres styles selon vos besoins */
+        }
+
+        .lien a{
+            color: inherit;
+            text-decoration: none;
+        }
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
@@ -203,6 +217,10 @@
             }
         }
 
+        async function push_link(search){
+            document.getElementById("link").innerHTML = '<a href="/ouverture?like='+ search +'"> Voir des infos supplémentaire sur ouverture '+ search +' </a>';
+        }
+
         async function handleRowClick(opening){
             // Get the URL to redirect to
             var url = '/ouverture?like=' + opening; 
@@ -229,7 +247,8 @@
                 await fill_ouvertures();
             }
             else{
-                openings_search(search);
+                await openings_search(search);
+                await push_link(search);
             }
         }
 
@@ -267,6 +286,9 @@
                 <input type="text" id="search" name="search" placeholder="Rechercher Une Ouverture...">
                 <input type="submit" value="Rechercher" >
             </form>
+            <div class="lien" id="link">
+                
+            </div>
         </div>
         <div class="infos" id="list_ouverture">
             <h3>Liste des Ouvertures</h3>
