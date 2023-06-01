@@ -127,6 +127,21 @@
             display: block;
         }
 
+        .accueil {
+            background-color: rgba(51, 51, 51, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            color: #fff;
+        }
+        .accueil p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #fff;
+        }
+
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
@@ -260,6 +275,7 @@
             await showAllPlayers_Default();
             await fill_dropdown();
         }
+        
 
     </script>
     
@@ -279,6 +295,13 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="accueil">
+        <h3>NOS JOUEURS</h3>
+        <p>
+            Vous trouverez sur cette page la liste des joueurs du Chess Club de l'UNIGE. Cliquez sur un joueur pour obtenir des informations supplémentaires telles que ses résultats et ses parties. De plus, utilisez les fonctionnalités de recherche avancée "Joueurs Actifs" et "Joueurs Titres" pour filtrer la liste.<br>
+            Vous pouvez également trier la liste des joueurs par classement, nom et club. Utilisez simplement les options de tri disponibles pour organiser les joueurs selon vos préférences.
+        </p>
     </div>
     <div class="main">
         <div class="infos" id="all_players">
