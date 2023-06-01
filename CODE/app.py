@@ -117,3 +117,13 @@ def api_get_tournois_info():
 def api_get_ouvertures():
     result=get_ouvertures(connection,cursor)
     return jsonify(result)
+
+@app.route("/api/ouverture/<like>")
+def api_get_ouverture(like):
+    result=get_ouverture_like(connection,cursor,like)
+    return jsonify(result)
+
+@app.route("/api/ouverture_populaires/")
+def api_get_ouverture_populaires():
+    result=get_popular_openings(connection,cursor)
+    return jsonify(result)

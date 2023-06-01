@@ -56,6 +56,7 @@
         .navbar a:hover {
             background-color: #ddd; /* Couleur de fond des liens au survol */
             color: black; /* Couleur du texte des liens au survol */
+            cursor: pointer;
         }
         
         .main{
@@ -116,6 +117,23 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color:rgb(239,5,117);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 17px;
+            width: 50%;
+        }
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
@@ -131,6 +149,7 @@
             }
 
         }
+
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
             let response = await fetch(url);
@@ -145,10 +164,50 @@
 
         }
 
+        async function openings_search(search){
+
+            let url = '/api/ouverture/' + search;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("ouvertures_table").innerHTML = '<tr><th> Nom </th><th> Code ECO </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("ouvertures_table").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>'+ data["data"][i]["code"] +'</td></tr></br>';
+            }
+        }
+
+        async function popular_openings(){
+            let url = '/api/ouverture_populaires/';
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("ouvertures_table").innerHTML = '<tr><th> Nom </th><th> Code ECO  </th><th> Nombre de Parties </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("ouvertures_table").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>'+ data["data"][i]["code"] + '</td><td>'+ data["data"][i]["nombre"]+'</td></tr></br>';
+            }
+        }
+
+        
+
         // appel lors du chargement de la page
         window.onload = async function () {
+            // Obtention de l'URL actuelle
+            var url = window.location.href;
+            
+            // Récupération des paramètres de l'URL
+            var params = new URLSearchParams(new URL(url).search);
+
+            // Obtention de la valeur de l'argument "id"
+            var search = params.get("search");
+
             await fill_dropdown();
-            await fill_ouvertures();
+
+            if(search==null){
+                await fill_ouvertures();
+            }
+            else{
+                openings_search(search);
+            }
         }
 
     </script>
@@ -172,10 +231,18 @@
     </div>
     <div class="main">
         <div class="infos" id="infos_joueur">
-            <a>FIELD POUR LA RECHERCHE</a>
+            <form onsubmit="">
+                <input type="text" id="search" name="search" placeholder="Rechercher Une Ouverture...">
+                <input type="submit" value="Rechercher" >
+            </form>
         </div>
         <div class="infos" id="list_ouverture">
             <h3>Liste des Ouvertures</h3>
+
+            <div class="navbar">
+                <a onclick="popular_openings()">Ouvertures Populaires</a>
+            </div>
+
             <table id="ouvertures_table">
             </table>
 

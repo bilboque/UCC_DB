@@ -305,3 +305,39 @@ def get_ouvertures(conn,curs):
         resultat["data"].append(dico)
 
     return resultat
+
+def get_ouverture_like(conn,curs,like):
+    mysql_query="SELECT * from ouvertures where nom_alternatif like '%" + like +"%';" 
+    curs.execute(mysql_query)
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["nom"]=opening[0]
+        dico["nom_alt"]=opening[1]
+        dico["code"]=opening[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_popular_openings(conn,curs):
+    mysql_query="select nom_clef,code_eco,count(*) from ouvertures,parties where nom_clef=ouverture group by ouverture order by count(*) DESC;"
+    curs.execute(mysql_query)
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["nom"]=opening[0]
+        dico["code"]=opening[1]
+        dico["nombre"]=opening[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
