@@ -153,10 +153,7 @@ def get_players_with_Title(conn,curs):
     return resultat
 
 def get_players_with_Games(conn,curs):
-    mysql_query="""SELECT JoueurID, Name, Surname, Rating, Title, Club,(NB_W+NB_B) AS NB_PARTIES \
-        FROM (SELECT COUNT(*) AS NB_W,WHITE FROM parties GROUP BY white ORDER BY COUNT(*) DESC) AS W,\
-            (SELECT COUNT(*) AS NB_B,BLACK FROM parties GROUP BY BLACK ORDER BY COUNT(*) DESC) AS B, joueurs \
-        WHERE W.white=B.BLACK AND W.white=JoueurID ORDER BY NB_PARTIES DESC"""
+    mysql_query="""SELECT JoueurID, Name, Surname, Rating, Title, Club,count(*) from joueurs,parties where joueurid=white or joueurid=black group by joueurid order by count(*) DESC"""
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -218,11 +215,10 @@ def get_game_played_by_id(conn,curs,id):
     return resultat
 
 def get_player_winrate(conn,curs,id):
-    mysql_query="""SELECT NB_WIN/(NB_W+NB_B) as WINRATE FROM \
-        (SELECT COUNT(*) AS NB_W,WHITE FROM parties where white=%s GROUP BY white ORDER BY COUNT(*) DESC) AS W,\
-        (SELECT COUNT(*) AS NB_B,BLACK FROM parties where black=%s GROUP BY BLACK ORDER BY COUNT(*) DESC) as B,\
+    mysql_query="""SELECT NB_WIN/(NB_G) as WINRATE FROM \
+        (SELECT COUNT(*) AS NB_G,joueurid FROM joueurs,parties where (white=joueurid or black=joueurid) and %s=joueurid and (white=%s or black=%s) GROUP BY joueurid ORDER BY COUNT(*) DESC) AS W,\
         (SELECT COUNT(*) AS NB_WIN,gagnant FROM parties where gagnant=%s GROUP BY gagnant ORDER BY COUNT(*) DESC) as WIN;"""
-    curs.execute(mysql_query,(id,id,id,))
+    curs.execute(mysql_query,(id,id,id,id,))
     winrate = curs.fetchall()
 
     return winrate
