@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChessClub DataBase</title> <!--Texte qui apparait dans le nom de l'onglet -->
+
+    <!--Contient les styles CSS de cette page -->
+    <style>
+        body {
+            margin-left: 100px;
+            margin-right: 100px;
+            padding: 10px;
+            font-family: Helvetica,sans-serif;
+            background-image: url("static/2D Chess set - Chessboard-18581.png");
+            background-size: 100%; /* Couvre la largeur, mais pas la hauteur */
+            background-position: center top;
+            background-repeat: repeat;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid;
+            border-color: #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+        }
+
+        tr:hover {
+            background-color: #444;
+        }
+
+        /* Style CSS pour la barre de navigation */
+        .navbar {
+            background-color: #333; /* Couleur de fond de la barre de navigation */
+            overflow: hidden;
+        }
+
+        /* Style CSS pour les liens dans la barre de navigation */
+        .navbar a {
+            float: left;
+            color: #f2f2f2; /* Couleur du texte des liens */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        /* Style CSS pour les liens dans la barre de navigation au survol de la souris */
+        .navbar a:hover {
+            background-color: #ddd; /* Couleur de fond des liens au survol */
+            color: black; /* Couleur du texte des liens au survol */
+        }
+        
+        .main{
+            padding: 10px;
+            background-color: #333;
+            margin-top: 20px;
+            color: #f2f2f2;
+        }  
+
+        .logo {
+            float: left;
+            margin-right: 10px;
+            width: auto; 
+            height: 48px; 
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 17px;
+            border: none;
+            outline: none;
+            color: #f2f2f2;
+            padding: 14px 16px;
+            background-color: inherit;
+            margin: 0;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
+    <!--Contient le JavaScript que nous allons utiliser pour cette page -->
+    <script>
+        async function opening_info(id){
+            let url = '/api/joueur/' + id;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            let winrate_url = '/api/winrate/' + id
+            let winrate_ans = await fetch(winrate_url);
+            let winrate = await winrate_ans.json();
+
+            document.getElementById("infos_opening").innerHTML ='<a><b>Infos de '+ data["nom"] + ' ' + data["prenom"] + ':</b></a></br>';
+            document.getElementById("infos_opening").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"] + ", Winrate: " + winrate +"</a>";
+        }
+
+        async function games(opening){
+            let url = '/api/games_by_opening/' + opening;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("game_table").innerHTML = '<tr><th> Blanc </th><th> Noir </th><th> Opening </th><th> Gagnant </th><th></tr>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("game_table").innerHTML +='<tr><td>' + data["data"][i]["blanc"] + '</td><td>' + data["data"][i]["noir"] + '</td><td>' + data["data"][i]["ouverture"] + '</td><td>'+ data["data"][i]["gagnant"]+'</td></tr></br>';
+            }
+
+        }
+
+        async function joueurs(opening){
+            let url = '/api/num_games_by_opening/' + opening;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("joueurs").innerHTML = '<tr><th> Nom </th><th> Nombre de Parties </th><th></tr>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("joueurs").innerHTML +='<tr><td>' + data["data"][i]["name"] + '</td><td>' + data["data"][i]["count"] + '</td></tr></br>';
+            }
+
+        }
+        async function fill_dropdown(){
+            let url = '/api/tournois_infos';
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.href = '/tournois?id='+data["data"][i]["id"];
+                option.textContent = data["data"][i]["nom"];
+                document.getElementById("drop_content").appendChild(option);
+            }
+
+        }
+
+        // appel lors du chargement de la page
+        window.onload = async function () {
+            // Obtention de l'URL actuelle
+            var url = window.location.href;
+            
+            // Récupération des paramètres de l'URL
+            var params = new URLSearchParams(new URL(url).search);
+
+            // Obtention de la valeur de l'argument "id"
+            var like = params.get("like");
+
+            await games(like);
+            await joueurs(like);
+            await fill_dropdown();
+        }
+
+    </script>
+
+</head>
+
+<!--Contient le corps de la page-->
+<body>
+    <div class="navbar">
+        <img src="/static/LOGO.jpeg" class="logo" >
+        <div>
+            <a href="/">Accueil</a>
+            <a href="/joueurs">Joueurs</a>
+            <a href="/ouvertures">Ouvertures</a>
+            <div class="dropdown">
+                <button class="dropbtn">Tournois</button>
+                <div class="dropdown-content" id="drop_content">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="infos" id="infos_opening">
+            <a>espace pour afficher les infos de l'ouverture</a>
+        </div>
+        <div class="infos">
+            <h3>Joué Par</h3>
+            <table id="joueurs">
+            </table>
+        </div>
+        <div class="infos" id="list_parties">
+            <h3>Liste des Parties</h3>
+            <table id="game_table">
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

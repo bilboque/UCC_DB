@@ -1,5 +1,5 @@
 def get_players_order_rating_DESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY RATING DESC"""
+    mysql_query="""SELECT * FROM JOUEURS where joueurid>0 ORDER BY RATING DESC"""
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -21,7 +21,7 @@ def get_players_order_rating_DESC(conn,curs):
     return resultat
 
 def get_players_order_rating_AESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY RATING"""
+    mysql_query="""SELECT * FROM JOUEURS where joueurid>0 ORDER BY RATING"""
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -43,7 +43,7 @@ def get_players_order_rating_AESC(conn,curs):
     return resultat
 
 def get_players_order_club_DESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY CLUB DESC,RATING DESC"""
+    mysql_query="""SELECT * FROM JOUEURS where joueurid>0 ORDER BY CLUB DESC,RATING DESC"""
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -65,7 +65,7 @@ def get_players_order_club_DESC(conn,curs):
     return resultat
 
 def get_players_order_club_AESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS ORDER BY CLUB,RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS where joueurid>0 ORDER BY CLUB,RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -87,7 +87,7 @@ def get_players_order_club_AESC(conn,curs):
     return resultat
 
 def get_players_order_nom_DESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' ORDER BY SURNAME DESC,RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' and joueurid>0 ORDER BY SURNAME DESC,RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -109,7 +109,7 @@ def get_players_order_nom_DESC(conn,curs):
     return resultat
 
 def get_players_order_nom_AESC(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' ORDER BY SURNAME,RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS WHERE SURNAME<>'---' and joueurid>0 ORDER BY SURNAME,RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -131,7 +131,7 @@ def get_players_order_nom_AESC(conn,curs):
     return resultat
 
 def get_players_with_Title(conn,curs):
-    mysql_query="""SELECT * FROM JOUEURS WHERE TITLE<>'NONE' ORDER BY RATING DESC """
+    mysql_query="""SELECT * FROM JOUEURS WHERE TITLE<>'NONE' and joueurid>0 ORDER BY RATING DESC """
     curs.execute(mysql_query)
     joueurs = curs.fetchall()
 
@@ -337,6 +337,43 @@ def get_popular_openings(conn,curs):
         dico["nom"]=opening[0]
         dico["code"]=opening[1]
         dico["nombre"]=opening[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_games_opening(conn,curs,opening):
+    mysql_query="SELECT W.Name,B.Name,ouverture,Winner.Name from joueurs as W, joueurs as B,joueurs as Winner,ouvertures,parties where ouvertures.nom_alternatif like '%"+ opening +"%' and parties.ouverture = ouvertures.nom_clef and W.JoueurID=parties.white and B.JoueurID=parties.black and Winner.JoueurID=parties.gagnant;"
+    curs.execute(mysql_query)
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["blanc"]=opening[0]
+        dico["noir"]=opening[1]
+        dico["ouverture"]=opening[2]
+        dico["gagnant"]=opening[3]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_number_of_games_opening(conn,curs,opening):
+    mysql_query="SELECT joueurid,name,count(*) from parties,joueurs,ouvertures where ouvertures.nom_alternatif like'%" + opening + "%' and (JoueurID=white or JoueurID=black) and  ouvertures.nom_clef = ouverture group by joueurid order by count(*) DESC"
+    curs.execute(mysql_query)
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["id"]=opening[0]
+        dico["name"]=opening[1]
+        dico["count"]=opening[2]
 
         resultat["data"].append(dico)
 

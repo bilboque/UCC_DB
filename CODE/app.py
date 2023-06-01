@@ -41,6 +41,10 @@ def tournois():
 def ouvertures():
     return render_template("ouvertures.html")
 
+@app.route("/ouverture",methods=['GET'])
+def ouverture():
+    return render_template("ouverture.html")
+
 
 #api routes : /api/joueurs
 @app.route("/api/joueurs/by_rating_DESC",methods=['GET'])
@@ -126,4 +130,14 @@ def api_get_ouverture(like):
 @app.route("/api/ouverture_populaires/")
 def api_get_ouverture_populaires():
     result=get_popular_openings(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/games_by_opening/<opening>")
+def api_get_games_by_opening(opening):
+    result=get_games_opening(connection,cursor,opening)
+    return jsonify(result)
+
+@app.route("/api/num_games_by_opening/<opening>")
+def api_get_number_games_by_opening(opening):
+    result=get_number_of_games_opening(connection,cursor,opening)
     return jsonify(result)
