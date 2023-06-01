@@ -146,3 +146,8 @@ def api_get_number_games_by_opening(opening):
 def api_get_openings_player(id):
     result=get_opening_joueur(connection,cursor,id)
     return jsonify(result)
+
+@app.route("/api/opening_winrate/<opening>")
+def api_get_opening_winrate(opening):
+    result=get_opening_points_expectency(connection,cursor,opening)
+    return jsonify(result)

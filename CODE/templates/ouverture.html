@@ -120,17 +120,13 @@
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
-        async function opening_info(id){
-            let url = '/api/joueur/' + id;
-            let response = await fetch(url);
-            let data = await response.json();
-
-            let winrate_url = '/api/winrate/' + id
+        async function opening_info(opening){
+            let winrate_url = '/api/opening_winrate/' + opening;
             let winrate_ans = await fetch(winrate_url);
             let winrate = await winrate_ans.json();
 
-            document.getElementById("infos_opening").innerHTML ='<a><b>Infos de '+ data["nom"] + ' ' + data["prenom"] + ':</b></a></br>';
-            document.getElementById("infos_opening").innerHTML += '<a> Rating: ' + data["rating"] + ', Club: ' + data["club"] + ", Titre: " + data["title"] + ", Winrate: " + winrate +"</a>";
+            document.getElementById("infos_opening").innerHTML ="<a><b>Voici les infos sur l'ouverture:" + opening +"</b></a><br>";
+            document.getElementById("infos_opening").innerHTML +="<a>Points moyen:" + winrate +"</a>";
         }
 
         async function games(opening){
@@ -169,7 +165,9 @@
             }
 
         }
+        
 
+        
         // appel lors du chargement de la page
         window.onload = async function () {
             // Obtention de l'URL actuelle
@@ -183,6 +181,7 @@
 
             await games(like);
             await joueurs(like);
+            await opening_info(like);
             await fill_dropdown();
         }
 
@@ -207,7 +206,6 @@
     </div>
     <div class="main">
         <div class="infos" id="infos_opening">
-            <a>espace pour afficher les infos de l'ouverture</a>
         </div>
         <div class="infos">
             <h3>Joué Par</h3>
