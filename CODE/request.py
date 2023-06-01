@@ -215,7 +215,7 @@ def get_game_played_by_id(conn,curs,id):
     return resultat
 
 def get_player_winrate(conn,curs,id):
-    mysql_query="""SELECT NB_WIN/(NB_G) as WINRATE FROM \
+    mysql_query="""SELECT (NB_WIN + 0)/(NB_G + 0) as WINRATE FROM \
         (SELECT COUNT(*) AS NB_G,joueurid FROM joueurs,parties where (white=joueurid or black=joueurid) and %s=joueurid and (white=%s or black=%s) GROUP BY joueurid ORDER BY COUNT(*) DESC) AS W,\
         (SELECT COUNT(*) AS NB_WIN,gagnant FROM parties where gagnant=%s GROUP BY gagnant ORDER BY COUNT(*) DESC) as WIN;"""
     curs.execute(mysql_query,(id,id,id,id,))
@@ -370,6 +370,23 @@ def get_number_of_games_opening(conn,curs,opening):
         dico["id"]=opening[0]
         dico["name"]=opening[1]
         dico["count"]=opening[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
+def get_opening_joueur(conn,curs,id):
+    mysql_query="select * from (select ouverture,count(*) as n_games from parties where (white = %s or black = %s) group by ouverture order by n_games DESC) as name where n_games >1"
+    curs.execute(mysql_query,(id,id,))
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["ouverture"]=opening[0]
+        dico["count"]=opening[1]
 
         resultat["data"].append(dico)
 

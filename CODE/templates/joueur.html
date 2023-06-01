@@ -157,6 +157,18 @@
             }
 
         }
+
+        async function openings(id){
+            let url = '/api/opening_joueur/' + id;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            document.getElementById("openings").innerHTML = '<tr><th> Ouverture </th><th> Nombre de parties </th></tr></br>';
+            for(i = 0; i < data["data"].length; i++){
+                document.getElementById("openings").innerHTML +='<tr><td>' + data["data"][i]["ouverture"] + '</td><td>' + data["data"][i]["count"] + '</td></tr></br>';
+            }
+        }
+
         async function resultats_tournois(id){
             let url = '/api/resultats_tournois/' + id;
             let response = await fetch(url);
@@ -183,6 +195,7 @@
             await player_infos(id);
             await games(id);
             await resultats_tournois(id);
+            await openings(id);
             await fill_dropdown();
         }
 
@@ -212,6 +225,11 @@
         <div class="infos">
             <h3>Resultats des Tournois</h3>
             <table id="resultat_tournois">
+            </table>
+        </div>
+        <div class="infos">
+            <h3>Ouverture du Joueur</h3>
+            <table id="openings">
             </table>
         </div>
         <div class="infos" id="list_parties">

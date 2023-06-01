@@ -141,3 +141,8 @@ def api_get_games_by_opening(opening):
 def api_get_number_games_by_opening(opening):
     result=get_number_of_games_opening(connection,cursor,opening)
     return jsonify(result)
+
+@app.route("/api/opening_joueur/<id>")
+def api_get_openings_player(id):
+    result=get_opening_joueur(connection,cursor,id)
+    return jsonify(result)
