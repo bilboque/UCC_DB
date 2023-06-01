@@ -37,6 +37,10 @@ def joueur():
 def tournois():
     return render_template("tournois.html")
 
+@app.route("/ouvertures",methods=['GET'])
+def ouvertures():
+    return render_template("ouvertures.html")
+
 
 #api routes : /api/joueurs
 @app.route("/api/joueurs/by_rating_DESC",methods=['GET'])
@@ -107,4 +111,9 @@ def api_get_resultats_tournois(id):
 @app.route("/api/tournois_infos")
 def api_get_tournois_info():
     result=get_tournament_infos(connection,cursor)
+    return jsonify(result)
+
+@app.route("/api/ouvertures/")
+def api_get_ouvertures():
+    result=get_ouvertures(connection,cursor)
     return jsonify(result)

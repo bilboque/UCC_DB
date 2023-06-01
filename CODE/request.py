@@ -287,3 +287,21 @@ def get_tournament_infos(conn,curs):
         resultat["data"].append(dico)
 
     return resultat
+
+def get_ouvertures(conn,curs):
+    mysql_query="""SELECT * from ouvertures order by nom_clef;"""
+    curs.execute(mysql_query)
+    openings = curs.fetchall()
+
+    resultat = {}
+    resultat["data"]=[]
+
+    for opening in openings:
+        dico = {}
+        dico["nom"]=opening[0]
+        dico["nom_alt"]=opening[1]
+        dico["code"]=opening[2]
+
+        resultat["data"].append(dico)
+
+    return resultat

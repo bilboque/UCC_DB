@@ -120,23 +120,16 @@
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
-        async function tournois_infos(id){
-            let url = '/api/tournoi/' + id;
+        async function fill_ouvertures(){
+            let url = '/api/ouvertures/';
             let response = await fetch(url);
             let data = await response.json();
 
-            document.getElementById("infos_tournois").innerHTML ='<b>'+ data["data"][0]["tournoi"] + ', ' + data["data"][0]["date"] + '</b></br>';
-        }
-
-        async function resultats_tournois(id){
-            let url = '/api/tournoi/' + id;
-            let response = await fetch(url);
-            let data = await response.json();
-
-            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th> Classement </th><th> Nombre de points </th></tr></br>';
+            document.getElementById("ouvertures_table").innerHTML = '<tr><th> Nom </th><th> Code ECO </th></tr></br>';
             for(i = 0; i < data["data"].length; i++){
-                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["resultat"] +'</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
+                document.getElementById("ouvertures_table").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>'+ data["data"][i]["code"] +'</td></tr></br>';
             }
+
         }
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
@@ -154,21 +147,8 @@
 
         // appel lors du chargement de la page
         window.onload = async function () {
-            // Obtention de l'URL actuelle
-            var url = window.location.href;
-            
-            // Récupération des paramètres de l'URL
-            var params = new URLSearchParams(new URL(url).search);
-
-            // Obtention de la valeur de l'argument "id"
-            var id = params.get("id");
-
-
-            //await tournois_infos(id);
-            //await resultats_tournois(id);
             await fill_dropdown();
-            await tournois_infos(id);
-            await resultats_tournois(id);
+            await fill_ouvertures();
         }
 
     </script>
@@ -191,10 +171,14 @@
         </div>
     </div>
     <div class="main">
-        <h4 id="infos_tournois">INFOS TOURNOIS:</h4>
-        <div>
-            <table id="resultat_tournois">
+        <div class="infos" id="infos_joueur">
+            <a>FIELD POUR LA RECHERCHE</a>
+        </div>
+        <div class="infos" id="list_ouverture">
+            <h3>Liste des Ouvertures</h3>
+            <table id="ouvertures_table">
             </table>
+
         </div>
     </div>
 </body>
