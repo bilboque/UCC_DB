@@ -138,11 +138,23 @@
             font-size: 17px;
             width: 25%;
         }
+        .game_form{
+            padding: 5px;
+        }
+
+        .input_game_form{
+            margin-left: 50px;
+        }
+
 
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
+
+        function updateDropdown(value){
+            console.log(value)
+        }
 
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
@@ -178,15 +190,19 @@
         }
 
         async function get_game_form(){
+            console.log('form');
             document.getElementById("form").innerHTML = '\
-            <div id="blanc"></div>\
-            <div id="noir"></div>\
-            <div id="gagnant"></div>\
-            <div id="ouverture"></div>\
-            <div id="session"></div>\
+            <h3>Enregistrer une Nouvelle Partie</h3>\
+            <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">XX</a><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content" id="drop_content_search_blanc"></div></div>\
+            <div class="game_form" id="noir"></div>\
+            <div class="game_form" id="gagnant"></div>\
+            <div class="game_form" id="ouverture"></div>\
+            <div class="game_form" id="session"></div>\
             <div id="submission"><input type="submit" value="Submit"></div>\
             ';
+            document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown(document.getElementById("search_blanc").value);});
         }
+    
         async function get_session_form(){
             document.getElementById("form").innerHTML = '';
         }
