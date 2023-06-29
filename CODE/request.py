@@ -82,6 +82,24 @@ def get_player(conn,curs,id):
 
     return resultat
 
+def get_players_like(conn,curs,like):
+    mysql_query="SELECT * FROM JOUEURS WHERE name like '%"+like+"%' LIMIT 5"
+    curs.execute(mysql_query)
+    joueurs = curs.fetchall()
+    resultat = {}
+
+    resultat["data"]=[]
+
+    for joueurs in joueurs:
+        dico = {}
+        dico["id"]=joueurs[0]
+        dico["prenom"]=joueurs[1]
+        dico["nom"]=joueurs[2]
+
+        resultat["data"].append(dico)
+
+    return resultat
+
 def get_game_played_by_id(conn,curs,id):
     mysql_query="""SELECT PartieID,white.Name,black.name,winner.Name,Ouverture,format,sessions.Nom FROM joueurs as winner, joueurs as black, joueurs as white,parties,sessions \
         WHERE sessions.SessionID = parties.SessionID AND winner.JoueurID=Gagnant and black.JoueurID=black and white.JoueurID=white and (white=%s or black=%s)"""

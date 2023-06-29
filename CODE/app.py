@@ -72,6 +72,11 @@ def api_joueur_infos(id):
     result = get_player(connection,cursor,id)
     return jsonify(result)
 
+@app.route("/api/joueurs_like/<like>",methods=['GET'])
+def api_joueurs_like(like):
+    result = get_players_like(connection,cursor,like)
+    return jsonify(result)
+
 @app.route("/api/gamesbyplayerid/<id>",methods=['GET'])
 def api_games_by_player_id(id):
     result=get_game_played_by_id(connection,cursor,id)

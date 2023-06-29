@@ -142,18 +142,66 @@
             padding: 5px;
         }
 
+        .game_form a{
+            float: left;
+            color: #f2f2f2; /* Couleur du texte des liens */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
         .input_game_form{
             margin-left: 50px;
         }
-
+        .dropdown-content-search{
+            display: block;
+            position: absolute;
+            left:400px;
+            background-color: #f9f9f9;
+            min-width: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content-search a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .dropdown-content-search a:hover{
+            background-color: #ddd;
+            cursor:auto;
+        }
 
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
+        async function push_name_white(prenom,id){
+            document.getElementById("prenom_blanc").innerHTML = prenom;
+            document.getElementById("id_blanc").innerHTML = id;
+            document.getElementById("search_blanc").value = "";
+            document.getElementById("drop_content_search_blanc").innerHTML ="";
+        }
 
-        function updateDropdown(value){
-            console.log(value)
+        async function updateDropdown(value){
+            if(value === ''){
+                document.getElementById("drop_content_search_blanc").innerHTML ="";
+                return;
+            }
+            let url = '/api/joueurs_like/' + value;
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content_search_blanc").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.textContent = data["data"][i]["nom"] + " " + data["data"][i]["prenom"];
+                var onclickFunc='push_name_white("'+ data["data"][i]["prenom"]+'",'+data["data"][i]["id"]+')';
+                option.setAttribute("onclick", onclickFunc);
+                document.getElementById("drop_content_search_blanc").appendChild(option);
+            }
         }
 
         async function fill_dropdown(){
@@ -190,13 +238,17 @@
         }
 
         async function get_game_form(){
-            console.log('form');
             document.getElementById("form").innerHTML = '\
             <h3>Enregistrer une Nouvelle Partie</h3>\
-            <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">XX</a><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content" id="drop_content_search_blanc"></div></div>\
+            <h4>Joueur Blanc</h4>\
+            <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">XX</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_blanc"></div></div></div>\
+            <h4>Joueur Noir</h4>\
             <div class="game_form" id="noir"></div>\
+            <h4>Gagnant</h4>\
             <div class="game_form" id="gagnant"></div>\
+            <h4>Ouverture</h4>\
             <div class="game_form" id="ouverture"></div>\
+            <h4>Session</h4>\
             <div class="game_form" id="session"></div>\
             <div id="submission"><input type="submit" value="Submit"></div>\
             ';
