@@ -17,6 +17,14 @@
             background-repeat: repeat;
         }
 
+        .infos{
+            padding-left: 1%;
+        }
+
+        .infos form {
+            display: grid;
+            align-items: center;
+        }
         /* Style CSS pour la barre de navigation */
         .navbar {
             background-color: #333; /* Couleur de fond de la barre de navigation */
@@ -37,6 +45,7 @@
         .navbar a:hover {
             background-color: #ddd; /* Couleur de fond des liens au survol */
             color: black; /* Couleur du texte des liens au survol */
+            cursor:pointer;
         }
         
         .main{
@@ -140,6 +149,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 17px;
+            width: 25%;
         }
         input[type="text"] {
             padding: 10px;
@@ -168,6 +178,42 @@
 
         }
 
+        async function get_player_form(){
+            document.getElementById("form").innerHTML = '\
+            <h3>Inscrire un Nouveau Joueur</h3>\
+            <form action="/api/new_player" method="post" onsubmit="validateForm(event)">\
+                <input type="text" id="nom" name="nom" placeholder="Nom"><br><br>\
+                \
+                <input type="text" id="prenom" name="prenom" placeholder="Prénom"><br><br>\
+                \
+                <input type="text" id="titre" name="titre" placeholder="Titre"><br><br>\
+                \
+                <input type="text" id="club" name="club" placeholder="Club ou Faculté"><br><br>\
+                \
+                <input type="text" id="rating" name="rating" placeholder="Rating"><br><br>\
+                \
+                <input type="submit" value="Submit">\
+            </form>\
+            ';
+        }
+
+        function validateForm() {
+            var nom = document.getElementById("nom").value;
+            var prenom = document.getElementById("prenom").value;
+            var titre = document.getElementById("titre").value;
+            var club = document.getElementById("club").value;
+            var rating = document.getElementById("rating").value;
+
+            if (nom === '' || prenom === '' || titre === '' || club === '' || rating === '') {
+                alert("Veuillez remplir tous les champs du formulaire.");
+                event.preventDefault();
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
         window.onload = async function () {
             await fill_dropdown();
         }
@@ -193,26 +239,10 @@
         <a href="/organisateur">Organisateur</a>
     </div>
     <div class="main">
-        <div class="infos" id="newplayer">
-            <h3>Ajouter un nouveau joueur</h3>
-            <form action="/api/new_player" method="post">
-                <label for="nom">Nom:</label>
-                <input type="text" id="nom" name="nom"><br><br>
-
-                <label for="prenom">Prénom:</label>
-                <input type="text" id="prenom" name="prenom"><br><br>
-
-                <label for="titre">Titre:</label>
-                <input type="text" id="titre" name="titre"><br><br>
-
-                <label for="club">Club:</label>
-                <input type="text" id="club" name="club"><br><br>
-
-                <label for="rating">Rating:</label>
-                <input type="text" id="rating" name="rating"><br><br>
-
-                <input type="submit" value="Envoyer">
-            </form>
+        <div class="navbar">
+            <a onclick="get_player_form()">Inscrire Joueur</a>
+        </div>
+        <div class="infos" id="form">
         </div>
     </div>
 
