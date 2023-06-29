@@ -147,7 +147,7 @@
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
         async function showAllPlayers_Default(){
-            let url = '/api/joueurs/by_rating_DESC'
+            let url = '/api/joueurs/rating DESC'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -158,7 +158,7 @@
         }
 
         async function showAllPlayers_ratingAESC(){
-            let url = '/api/joueurs/by_rating_AESC'
+            let url = '/api/joueurs/rating'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -170,7 +170,7 @@
         }
 
         async function showAllPlayers_ratingDESC(){
-            let url = '/api/joueurs/by_rating_DESC'
+            let url = '/api/joueurs/rating DESC'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -181,7 +181,7 @@
         }
 
         async function showAllPlayers_clubDESC(){
-            let url = '/api/joueurs/by_club_DESC'
+            let url = '/api/joueurs/club DESC'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -192,7 +192,7 @@
         }
 
         async function showAllPlayers_clubAESC(){
-            let url = '/api/joueurs/by_club_AESC'
+            let url = '/api/joueurs/club'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -203,7 +203,7 @@
         }
 
         async function showAllPlayers_nomAESC(){
-            let url = '/api/joueurs/by_nom_AESC'
+            let url = '/api/joueurs/surname'
             let response = await fetch(url);
             let data = await response.json();
 
@@ -214,7 +214,7 @@
         }
 
         async function showAllPlayers_nomDESC(){
-            let url = '/api/joueurs/by_nom_DESC'
+            let url = '/api/joueurs/surname DESC'
             let response = await fetch(url);
             let data = await response.json();
 
