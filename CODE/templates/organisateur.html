@@ -197,6 +197,10 @@
             ';
         }
 
+        async function get_game_form(){
+            document.getElementById("form").innerHTML = "";
+        }
+
         function validateForm() {
             var nom = document.getElementById("nom").value;
             var prenom = document.getElementById("prenom").value;
@@ -241,6 +245,9 @@
     <div class="main">
         <div class="navbar">
             <a onclick="get_player_form()">Inscrire Joueur</a>
+            <a onclick="get_game_form()">Enregistrer Partie</a>
+            <a onclick="get_session_form()">Nouvelle Session</a>
+            <a onclick="create_tournament()">Créer Tournois</a>
         </div>
         <div class="infos" id="form">
         </div>
