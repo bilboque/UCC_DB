@@ -61,26 +61,6 @@
             width: auto; 
             height: 48px; 
         }
-        .container {
-            display: flex;
-            margin-top: 10px;
-            padding: 10px;
-        }
-        .left-div {
-            width: 50%;
-        }
-
-        .right-div {
-            width: 50%;
-        }
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            padding: 10px;
-             /* Ajustez la hauteur selon vos besoins */
-        }
         .dropdown {
             float: left;
             overflow: hidden;
@@ -198,7 +178,20 @@
         }
 
         async function get_game_form(){
-            document.getElementById("form").innerHTML = "";
+            document.getElementById("form").innerHTML = '\
+            <div id="blanc"></div>\
+            <div id="noir"></div>\
+            <div id="gagnant"></div>\
+            <div id="ouverture"></div>\
+            <div id="session"></div>\
+            <div id="submission"><input type="submit" value="Submit"></div>\
+            ';
+        }
+        async function get_session_form(){
+            document.getElementById("form").innerHTML = '';
+        }
+        async function create_tournament(){
+            document.getElementById("form").innerHTML = '';
         }
 
         function validateForm() {
