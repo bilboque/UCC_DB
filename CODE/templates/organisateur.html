@@ -186,7 +186,14 @@
             document.getElementById("drop_content_search_blanc").innerHTML ="";
         }
 
-        async function updateDropdown(value){
+        async function push_name_noir(prenom,id){
+            document.getElementById("prenom_noir").innerHTML = prenom;
+            document.getElementById("id_noir").innerHTML = id;
+            document.getElementById("search_noir").value = "";
+            document.getElementById("drop_content_search_noir").innerHTML ="";
+        }
+
+        async function updateDropdown_blanc(value){
             if(value === ''){
                 document.getElementById("drop_content_search_blanc").innerHTML ="";
                 return;
@@ -204,6 +211,24 @@
             }
         }
 
+        async function updateDropdown_noir(value){
+            if(value === ''){
+                document.getElementById("drop_content_search_noir").innerHTML ="";
+                return;
+            }
+            let url = '/api/joueurs_like/' + value;
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content_search_noir").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.textContent = data["data"][i]["nom"] + " " + data["data"][i]["prenom"];
+                var onclickFunc='push_name_noir("'+ data["data"][i]["prenom"]+'",'+data["data"][i]["id"]+')';
+                option.setAttribute("onclick", onclickFunc);
+                document.getElementById("drop_content_search_noir").appendChild(option);
+            }
+        }
+
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
             let response = await fetch(url);
@@ -216,6 +241,20 @@
                 document.getElementById("drop_content").appendChild(option);
             }
 
+        }
+
+        async function white_win(){
+            document.getElementById("gagnant_id").setAttribute("data-info", document.getElementById("id_blanc").innerText);
+            document.getElementById("gagnant_id").innerHTML = "Gagnant | "+document.getElementById("prenom_blanc").innerText;
+
+        }
+        async function black_win(){
+            document.getElementById("gagnant_id").setAttribute("data-info", document.getElementById("id_noir").innerText);
+            document.getElementById("gagnant_id").innerHTML = "Gagnant | "+document.getElementById("prenom_noir").innerText;
+        }
+        async function draw_result(){
+            document.getElementById("gagnant_id").setAttribute("data-info", 0);
+            document.getElementById("gagnant_id").innerHTML = "DRAW | DRAW";
         }
 
         async function get_player_form(){
@@ -243,16 +282,22 @@
             <h4>Joueur Blanc</h4>\
             <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">XX</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_blanc"></div></div></div>\
             <h4>Joueur Noir</h4>\
-            <div class="game_form" id="noir"></div>\
+            <div class="game_form" id="noir"><a id="prenom_noir">Prenom</a><a> - ID: </a><a id="id_noir">XX</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_noir" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_noir"></div></div></div>\
             <h4>Gagnant</h4>\
-            <div class="game_form" id="gagnant"></div>\
+            <div class="game_form" id="gagnant"><div class="navbar">\
+            <a onclick="white_win()">Blanc</a>\
+            <a onclick="black_win()">Noir</a>\
+            <a onclick="draw_result()">Draw</a>\
+            <a id="gagnant_id" data>Gagnant | </a>\
+            </div>\
             <h4>Ouverture</h4>\
             <div class="game_form" id="ouverture"></div>\
             <h4>Session</h4>\
             <div class="game_form" id="session"></div>\
             <div id="submission"><input type="submit" value="Submit"></div>\
             ';
-            document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown(document.getElementById("search_blanc").value);});
+            document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown_blanc(document.getElementById("search_blanc").value);});
+            document.getElementById("search_noir").addEventListener('input', (evt) => {updateDropdown_noir(document.getElementById("search_noir").value);});
         }
     
         async function get_session_form(){
@@ -308,7 +353,7 @@
             <a onclick="get_player_form()">Inscrire Joueur</a>
             <a onclick="get_game_form()">Enregistrer Partie</a>
             <a onclick="get_session_form()">Nouvelle Session</a>
-            <a onclick="create_tournament()">Créer Tournois</a>
+            <a onclick="create_tournament()">Nouveau Tournois</a>
         </div>
         <div class="infos" id="form">
         </div>
