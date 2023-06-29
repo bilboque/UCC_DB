@@ -16,25 +16,6 @@
             background-position: center top;
             background-repeat: repeat;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 1px solid;
-            border-color: #ddd;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #333;
-        }
-
-        tr:hover {
-            background-color: #444;
-        }
 
         /* Style CSS pour la barre de navigation */
         .navbar {
@@ -70,6 +51,26 @@
             margin-right: 10px;
             width: auto; 
             height: 48px; 
+        }
+        .container {
+            display: flex;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .left-div {
+            width: 50%;
+        }
+
+        .right-div {
+            width: 50%;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px;
+             /* Ajustez la hauteur selon vos besoins */
         }
         .dropdown {
             float: left;
@@ -116,7 +117,6 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-
         .accueil {
             background-color: rgba(51, 51, 51, 0.9);
             padding: 20px;
@@ -125,35 +125,35 @@
             margin-top: 20px;
             color: #fff;
         }
-
         .accueil p {
             color: #333;
             font-size: 16px;
             line-height: 1.5;
             color: #fff;
         }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color:rgb(239,5,117);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 17px;
+            width: 25%;
+        }
+
     </style>
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
-        async function tournois_infos(id){
-            let url = '/api/tournoi/' + id;
-            let response = await fetch(url);
-            let data = await response.json();
 
-            document.getElementById("infos_tournois").innerHTML ='<b>'+ data["data"][0]["tournoi"] + ', ' + data["data"][0]["date"] + '</b></br>';
-        }
-
-        async function resultats_tournois(id){
-            let url = '/api/tournoi/' + id;
-            let response = await fetch(url);
-            let data = await response.json();
-
-            document.getElementById("resultat_tournois").innerHTML = '<tr><th> Nom </th><th> Prenom </th><th> Classement </th><th> Nombre de points </th></tr></br>';
-            for(i = 0; i < data["data"].length; i++){
-                document.getElementById("resultat_tournois").innerHTML +='<tr><td>' + data["data"][i]["nom"] + '</td><td>' + data["data"][i]["prenom"] + '</td><td>' + data["data"][i]["resultat"] +'</td><td>' + data["data"][i]["points"] + '</td></tr></br>';
-            }
-        }
         async function fill_dropdown(){
             let url = '/api/tournois_infos';
             let response = await fetch(url);
@@ -168,23 +168,8 @@
 
         }
 
-        // appel lors du chargement de la page
         window.onload = async function () {
-            // Obtention de l'URL actuelle
-            var url = window.location.href;
-            
-            // Récupération des paramètres de l'URL
-            var params = new URLSearchParams(new URL(url).search);
-
-            // Obtention de la valeur de l'argument "id"
-            var id = params.get("id");
-
-
-            //await tournois_infos(id);
-            //await resultats_tournois(id);
             await fill_dropdown();
-            await tournois_infos(id);
-            await resultats_tournois(id);
         }
 
     </script>
@@ -207,18 +192,29 @@
         </div>
         <a href="/organisateur">Organisateur</a>
     </div>
-    <div class="accueil">
-        <h3>LES RESULTATS</h3>
-        <p>
-            Vous trouverez sur cette page les résultats du tournoi. Que ces résultats vous inspirent et nourrissent votre passion pour le jeu d'échecs.
-        </p>
-    </div>
     <div class="main">
-        <h4 id="infos_tournois">INFOS TOURNOIS:</h4>
-        <div>
-            <table id="resultat_tournois">
-            </table>
+        <div class="infos" id="newplayer">
+            <h3>Ajouter un nouveau joueur</h3>
+            <form action="/api/new_player" method="post">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom"><br><br>
+
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom"><br><br>
+
+                <label for="titre">Titre:</label>
+                <input type="text" id="titre" name="titre"><br><br>
+
+                <label for="club">Club:</label>
+                <input type="text" id="club" name="club"><br><br>
+
+                <label for="rating">Rating:</label>
+                <input type="text" id="rating" name="rating"><br><br>
+
+                <input type="submit" value="Envoyer">
+            </form>
         </div>
     </div>
+
 </body>
 </html>

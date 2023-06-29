@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,render_template
+from flask import Flask,jsonify,render_template,request
 from mysql import connector
 
 from request import *
@@ -45,9 +45,13 @@ def ouvertures():
 def ouverture():
     return render_template("ouverture.html")
 
+@app.route("/organisateur",methods=['GET'])
+def admin():
+    return render_template("organisateur.html")
+
 
 #api routes : /api/joueurs
-
+#GET methods
 @app.route("/api/joueurs/<order>",methods=['GET'])
 def api_joueurs(order):
     result = get_players(connection,cursor,order)
@@ -63,67 +67,83 @@ def api_joueurs_with_title():
     result = get_players_with_Title(connection,cursor)
     return jsonify(result)
 
-@app.route("/api/joueur/<id>")
+@app.route("/api/joueur/<id>",methods=['GET'])
 def api_joueur_infos(id):
     result = get_player(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/gamesbyplayerid/<id>")
+@app.route("/api/gamesbyplayerid/<id>",methods=['GET'])
 def api_games_by_player_id(id):
     result=get_game_played_by_id(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/winrate/<id>")
+@app.route("/api/winrate/<id>",methods=['GET'])
 def api_get_winrate(id):
     result=get_player_winrate(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/resultats_tournois/<id>")
+@app.route("/api/resultats_tournois/<id>",methods=['GET'])
 def api_get_resultats_joueurs(id):
     result=get_resultat_player(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/tournoi/<id>")
+@app.route("/api/tournoi/<id>",methods=['GET'])
 def api_get_resultats_tournois(id):
     result=get_tournament_result(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/tournois_infos")
+@app.route("/api/tournois_infos",methods=['GET'])
 def api_get_tournois_info():
     result=get_tournament_infos(connection,cursor)
     return jsonify(result)
 
-@app.route("/api/ouvertures/")
+@app.route("/api/ouvertures/",methods=['GET'])
 def api_get_ouvertures():
     result=get_ouvertures(connection,cursor)
     return jsonify(result)
 
-@app.route("/api/ouverture/<like>")
+@app.route("/api/ouverture/<like>",methods=['GET'])
 def api_get_ouverture(like):
     result=get_ouverture_like(connection,cursor,like)
     return jsonify(result)
 
-@app.route("/api/ouverture_populaires/")
+@app.route("/api/ouverture_populaires/",methods=['GET'])
 def api_get_ouverture_populaires():
     result=get_popular_openings(connection,cursor)
     return jsonify(result)
 
-@app.route("/api/games_by_opening/<opening>")
+@app.route("/api/games_by_opening/<opening>",methods=['GET'])
 def api_get_games_by_opening(opening):
     result=get_games_opening(connection,cursor,opening)
     return jsonify(result)
 
-@app.route("/api/num_games_by_opening/<opening>")
+@app.route("/api/num_games_by_opening/<opening>",methods=['GET'])
 def api_get_number_games_by_opening(opening):
     result=get_number_of_games_opening(connection,cursor,opening)
     return jsonify(result)
 
-@app.route("/api/opening_joueur/<id>")
+@app.route("/api/opening_joueur/<id>",methods=['GET'])
 def api_get_openings_player(id):
     result=get_opening_joueur(connection,cursor,id)
     return jsonify(result)
 
-@app.route("/api/opening_winrate/<opening>")
+@app.route("/api/opening_winrate/<opening>",methods=['GET'])
 def api_get_opening_winrate(opening):
     result=get_opening_points_expectency(connection,cursor,opening)
     return jsonify(result)
+
+#POST methods
+@app.route('/api/new_player', methods=['POST'])
+def new_player():
+    nom = request.form.get('nom')
+    prenom = request.form.get('prenom')
+    titre = request.form.get('titre')
+    club = request.form.get('club')
+    rating = request.form.get('rating')
+
+    query = "INSERT INTO joueurs (Surname, name, title, club, rating) VALUES (%s, %s, %s, %s, %s)"
+    values = (nom, prenom, titre, club, rating)
+    cursor.execute(query, values)
+    connection.commit()
+
+    return "Données du nouveau joueur insérées avec succès dans la base de données."
