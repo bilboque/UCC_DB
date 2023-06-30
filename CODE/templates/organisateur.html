@@ -179,6 +179,47 @@
 
     <!--Contient le JavaScript que nous allons utiliser pour cette page -->
     <script>
+        async function submit_game(){
+            IdBlanc=document.getElementById("id_blanc").innerHTML;
+            IdNoir=document.getElementById("id_noir").innerHTML;
+            IdGagnant=document.getElementById("gagnant_id").getAttribute("data-info");
+            Ouverture=document.getElementById("nom_ouverture").innerHTML;
+            format="Blitz 3|2";
+            IdSession=document.getElementById("nom_session").getAttribute("data-info");
+
+            if(IdBlanc === "NONE" || IdNoir === "NONE" || IdGagnant == -1 || Ouverture === "Ouverture" || IdSession == 0){
+                alert("Veuillez remplir tous les champs du formulaire.");
+                return;
+            }
+            const jsonData = `{
+                "idBlanc": "${IdBlanc}",
+                "idNoir": "${IdNoir}",
+                "idGagnant": "${IdGagnant}",
+                "ouverture": "${Ouverture}",
+                "format": "${format}",
+                "idSession": "${IdSession}"
+            }`;
+            try {
+                const response = await fetch('/api/new_game', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+                });
+
+                if (response.ok) {
+                console.log("Données envoyées avec succès !");
+                } else {
+                console.error("Erreur lors de l'envoi des données à la base de données.");
+                }
+            } catch (error) {
+                console.error("Une erreur s'est produite :", error);
+            }
+
+            console.log("submit:" + IdBlanc + "," + IdNoir + "," + IdGagnant + "," + Ouverture + "," + format + "," + IdSession);
+        }
+
         async function push_name_white(prenom,id){
             document.getElementById("prenom_blanc").innerHTML = prenom;
             document.getElementById("id_blanc").innerHTML = id;
@@ -337,13 +378,13 @@
             <a onclick="white_win()">Blanc</a>\
             <a onclick="black_win()">Noir</a>\
             <a onclick="draw_result()">Draw</a>\
-            <a id="gagnant_id" data-info="0">Gagnant | </a>\
+            <a id="gagnant_id" data-info="-1">Gagnant | </a>\
             </div>\
             <h4>Ouverture</h4>\
             <div class="game_form" id="ouverture"><a id="nom_ouverture">Ouverture</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_opening" placeholder="Ouverture"><div class="dropdown-content-search" id="drop_content_search_opening"></div></div></div>\
             <h4>Session</h4>\
             <div class="game_form" id="session"><a id="nom_session" data-info="0">Session</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_session" placeholder="Session"><div class="dropdown-content-search" id="drop_content_search_session"></div></div></div>\
-            <div id="submission"><input type="submit" value="Submit"></div>\
+            <div id="submission"><input type="submit" value="Submit" onclick="submit_game()"></div>\
             ';
             document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown_blanc(document.getElementById("search_blanc").value);});
             document.getElementById("search_noir").addEventListener('input', (evt) => {updateDropdown_noir(document.getElementById("search_noir").value);});

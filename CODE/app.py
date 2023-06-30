@@ -158,3 +158,20 @@ def new_player():
     connection.commit()
 
     return "Données du nouveau joueur insérées avec succès dans la base de données."
+
+@app.route('/api/new_game', methods=['POST'])
+def new_game():
+    data = request.json
+    idBlanc = data['idBlanc']
+    idNoir = data['idNoir']
+    idGagnant = data['idGagnant']
+    ouverture = data['ouverture']
+    format = data['format']
+    idSession = data['idSession']
+
+    query = "INSERT INTO parties (white, black, gagnant, ouverture, format, SessionId) VALUES (%s, %s, %s, %s, %s, %s)"
+    values = (idBlanc,idNoir,idGagnant,ouverture,format,idSession)
+    cursor.execute(query, values)
+    connection.commit()
+    
+    return "Données du nouveau joueur insérées avec succès dans la base de données."
