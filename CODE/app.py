@@ -175,3 +175,16 @@ def new_game():
     connection.commit()
     
     return "Données du nouveau joueur insérées avec succès dans la base de données."
+
+@app.route('/api/new_session', methods=['POST'])
+def new_session():
+    nom = request.form.get('nom')
+    date = request.form.get('date')
+    type = request.form.get('type')
+    
+
+    query = "INSERT INTO sessions (nom,date,type) VALUES (%s, %s, %s)"
+    values = (nom, date, type)
+    cursor.execute(query, values)
+    connection.commit()
+    return "Données du nouveau joueur insérées avec succès dans la base de données."

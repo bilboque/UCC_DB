@@ -352,15 +352,10 @@
             <h3>Inscrire un Nouveau Joueur</h3>\
             <form action="/api/new_player" method="post" onsubmit="validateForm(event)">\
                 <input type="text" id="nom" name="nom" placeholder="Nom"><br><br>\
-                \
                 <input type="text" id="prenom" name="prenom" placeholder="Prénom"><br><br>\
-                \
                 <input type="text" id="titre" name="titre" placeholder="Titre"><br><br>\
-                \
                 <input type="text" id="club" name="club" placeholder="Club ou Faculté"><br><br>\
-                \
                 <input type="text" id="rating" name="rating" placeholder="Rating"><br><br>\
-                \
                 <input type="submit" value="Submit">\
             </form>\
             ';
@@ -384,7 +379,8 @@
             <div class="game_form" id="ouverture"><a id="nom_ouverture">Ouverture</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_opening" placeholder="Ouverture"><div class="dropdown-content-search" id="drop_content_search_opening"></div></div></div>\
             <h4>Session</h4>\
             <div class="game_form" id="session"><a id="nom_session" data-info="0">Session</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_session" placeholder="Session"><div class="dropdown-content-search" id="drop_content_search_session"></div></div></div>\
-            <div id="submission"><input type="submit" value="Submit" onclick="submit_game()"></div>\
+            <br><br><br><br><div id="submission"><input type="submit" value="Submit" onclick="submit_game()"></div>\
+            <br><br><br><br>\
             ';
             document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown_blanc(document.getElementById("search_blanc").value);});
             document.getElementById("search_noir").addEventListener('input', (evt) => {updateDropdown_noir(document.getElementById("search_noir").value);});
@@ -393,13 +389,21 @@
         }
     
         async function get_session_form(){
-            document.getElementById("form").innerHTML = '';
+            document.getElementById("form").innerHTML = '\
+            <h3>Nouvelle Session</h3>\
+            <form action="/api/new_session" method="post" onsubmit="validateFormSession(event)">\
+                <input type="text" id="nom" name="nom" placeholder="Nom Session"><br><br>\
+                <input type="text" id="date" name="date" placeholder="AAAA-MM-JJ"><br><br>\
+                <input type="text" id="type" name="type" placeholder="Type (Session / Tournois)"><br><br>\
+                <input type="submit" value="Submit">\
+            </form>\
+            ';
         }
         async function create_tournament(){
             document.getElementById("form").innerHTML = '';
         }
 
-        function validateForm() {
+        function validateForm(event){
             var nom = document.getElementById("nom").value;
             var prenom = document.getElementById("prenom").value;
             var titre = document.getElementById("titre").value;
@@ -407,6 +411,20 @@
             var rating = document.getElementById("rating").value;
 
             if (nom === '' || prenom === '' || titre === '' || club === '' || rating === '') {
+                alert("Veuillez remplir tous les champs du formulaire.");
+                event.preventDefault();
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        function validateFormSession(event){
+            var nom = document.getElementById("nom").value;
+            var date = document.getElementById("date").value;
+            var type = document.getElementById("type").value;
+            if (nom === '' || date === '' || type === '') {
                 alert("Veuillez remplir tous les champs du formulaire.");
                 event.preventDefault();
                 return false;
