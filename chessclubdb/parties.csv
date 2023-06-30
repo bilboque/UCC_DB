@@ -83,7 +83,7 @@
 83,23,26,26,Scotch game - Mainline,Blitz 3|2,4
 84,12,2,2,Vienna game - Frankenstein-Dracula Variation,Blitz 3|2,4
 85,11,23,11,Scotch game,Blitz 3|2,4
-86,9,1,9,Matsuo attack,Blitz 3|2,4
+86,9,1,1,Matsuo attack,Blitz 3|2,4
 87,26,3,3,Sicilian defense - Rossolimo variation,Blitz 3|2,4
 88,39,25,25,Kings Indian defense,Blitz 3|2,4
 89,22,39,39,Alekhine defense,Blitz 3|2,4
@@ -101,3 +101,7 @@
 101,26,22,22,Matsuo attack,Blitz 3|2,4
 102,24,1,24,Sodium attack,Blitz 3|2,4
 103,25,2,2,Sicilian defense - Smith Morra gambit,Blitz 3|2,4
+105,27,1,1,English opening,7 days/move,9
+106,1,27,27,Sicilian defense,7 days/move,9
+107,27,1,1,Queens gambit declined,7 days/move,9
+108,27,1,27,Queens gambit declined,3 days/move,9
