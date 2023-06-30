@@ -187,4 +187,4 @@ def new_session():
     values = (nom, date, type)
     cursor.execute(query, values)
     connection.commit()
-    return "Données du nouveau joueur insérées avec succès dans la base de données."
+    return "Nouvelle session enregistré avec succès dans la base de données."
