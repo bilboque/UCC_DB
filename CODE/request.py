@@ -305,3 +305,20 @@ def get_opening_points_expectency(conn,curs,opening):
     mysql_query="select ((n_draw.n/2 + n_win.n)/n_games.n) from (select count(*) as n from parties, ouvertures where parties.ouverture = ouvertures.nom_clef and ouvertures.nom_alternatif like '%"+ opening +"%' and gagnant = white) as n_win, (select count(*) as n from parties, ouvertures where parties.ouverture = ouvertures.nom_clef and ouvertures.nom_alternatif like '%"+opening+"%' and gagnant = 0) as n_draw,(select count(*) as n from parties, ouvertures where parties.ouverture = ouvertures.nom_clef and ouvertures.nom_alternatif like '%"+opening+"%') as n_games"
     curs.execute(mysql_query)
     return curs.fetchall()
+
+def get_sessions_like(conn,curs,nom_session):
+    mysql_query="SELECT SessionID,Nom,Date from sessions where nom like '%" + nom_session + "%' order by Date DESC;"
+    curs.execute(mysql_query)
+    sessions = curs.fetchall()
+    
+    resultat = {}
+    resultat["data"]=[]
+
+    for session in sessions:
+        dico = {}
+        dico["id"]=session[0]
+        dico["nom"]=session[1]
+
+        resultat["data"].append(dico)
+
+    return resultat

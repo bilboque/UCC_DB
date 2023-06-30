@@ -172,7 +172,7 @@
         }
         .dropdown-content-search a:hover{
             background-color: #ddd;
-            cursor:auto;
+            cursor:pointer;
         }
 
     </style>
@@ -197,6 +197,13 @@
             document.getElementById("nom_ouverture").innerHTML = nom_ouverture;
             document.getElementById("search_opening").value = "";
             document.getElementById("drop_content_search_opening").innerHTML ="";
+        }
+
+        async function push_name_session(nom_session,IdSession){
+            document.getElementById("nom_session").innerHTML = nom_session;
+            document.getElementById("nom_session").setAttribute("data-info", IdSession);
+            document.getElementById("search_session").value = "";
+            document.getElementById("drop_content_search_session").innerHTML ="";
         }
 
         async function updateDropdown_blanc(value){
@@ -250,6 +257,24 @@
                 var onclickFunc='push_name_opening("'+ data["data"][i]["nom"] +'")';
                 option.setAttribute("onclick", onclickFunc);
                 document.getElementById("drop_content_search_opening").appendChild(option);
+            }
+        }
+
+        async function updateDropdown_session(nom_session){
+            if(nom_session === ''){
+                document.getElementById("drop_content_search_session").innerHTML ="";
+                return;
+            }
+            let url='/api/session_like/' + nom_session;
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content_search_session").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.textContent = data["data"][i]["nom"];
+                var onclickFunc='push_name_session("'+ data["data"][i]["nom"] + '","' + data["data"][i]["id"] +'")';
+                option.setAttribute("onclick", onclickFunc);
+                document.getElementById("drop_content_search_session").appendChild(option);
             }
         }
 
@@ -312,17 +337,18 @@
             <a onclick="white_win()">Blanc</a>\
             <a onclick="black_win()">Noir</a>\
             <a onclick="draw_result()">Draw</a>\
-            <a id="gagnant_id" data>Gagnant | </a>\
+            <a id="gagnant_id" data-info="0">Gagnant | </a>\
             </div>\
             <h4>Ouverture</h4>\
             <div class="game_form" id="ouverture"><a id="nom_ouverture">Ouverture</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_opening" placeholder="Ouverture"><div class="dropdown-content-search" id="drop_content_search_opening"></div></div></div>\
             <h4>Session</h4>\
-            <div class="game_form" id="session"></div>\
+            <div class="game_form" id="session"><a id="nom_session" data-info="0">Session</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_session" placeholder="Session"><div class="dropdown-content-search" id="drop_content_search_session"></div></div></div>\
             <div id="submission"><input type="submit" value="Submit"></div>\
             ';
             document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown_blanc(document.getElementById("search_blanc").value);});
             document.getElementById("search_noir").addEventListener('input', (evt) => {updateDropdown_noir(document.getElementById("search_noir").value);});
             document.getElementById("search_opening").addEventListener('input', (evt) => {updateDropdown_opening(document.getElementById("search_opening").value);});
+            document.getElementById("search_session").addEventListener('input', (evt) => {updateDropdown_session(document.getElementById("search_session").value);});
         }
     
         async function get_session_form(){

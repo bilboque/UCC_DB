@@ -137,6 +137,12 @@ def api_get_opening_winrate(opening):
     result=get_opening_points_expectency(connection,cursor,opening)
     return jsonify(result)
 
+@app.route("/api/session_like/<session>",methods=['GET'])
+def api_get_session(session):
+    result=get_sessions_like(connection,cursor,session)
+    return jsonify(result)
+
+
 #POST methods
 @app.route('/api/new_player', methods=['POST'])
 def new_player():
