@@ -217,7 +217,7 @@
                 console.error("Une erreur s'est produite :", error);
             }
 
-            console.log("submit:" + IdBlanc + "," + IdNoir + "," + IdGagnant + "," + Ouverture + "," + format + "," + IdSession);
+            alert("Partie Enregistrée");
         }
 
         async function push_name_white(prenom,id){
@@ -416,6 +416,7 @@
                 return false;
             }
             else{
+                alert("Joueur Inscrit");
                 return true;
             }
         }
@@ -430,6 +431,7 @@
                 return false;
             }
             else{
+                alert("Session Créée");
                 return true;
             }
         }
