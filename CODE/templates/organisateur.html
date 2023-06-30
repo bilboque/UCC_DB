@@ -193,6 +193,12 @@
             document.getElementById("drop_content_search_noir").innerHTML ="";
         }
 
+        async function push_name_opening(nom_ouverture){
+            document.getElementById("nom_ouverture").innerHTML = nom_ouverture;
+            document.getElementById("search_opening").value = "";
+            document.getElementById("drop_content_search_opening").innerHTML ="";
+        }
+
         async function updateDropdown_blanc(value){
             if(value === ''){
                 document.getElementById("drop_content_search_blanc").innerHTML ="";
@@ -226,6 +232,24 @@
                 var onclickFunc='push_name_noir("'+ data["data"][i]["prenom"]+'",'+data["data"][i]["id"]+')';
                 option.setAttribute("onclick", onclickFunc);
                 document.getElementById("drop_content_search_noir").appendChild(option);
+            }
+        }
+
+        async function updateDropdown_opening(value){
+            if(value === ''){
+                document.getElementById("drop_content_search_opening").innerHTML ="";
+                return;
+            }
+            let url = '/api/ouverture/' + value;
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById("drop_content_search_opening").innerHTML ="";
+            for(i = 0; i < data["data"].length; i++){
+                var option = document.createElement("a");
+                option.textContent = data["data"][i]["nom"];
+                var onclickFunc='push_name_opening("'+ data["data"][i]["nom"] +'")';
+                option.setAttribute("onclick", onclickFunc);
+                document.getElementById("drop_content_search_opening").appendChild(option);
             }
         }
 
@@ -280,9 +304,9 @@
             document.getElementById("form").innerHTML = '\
             <h3>Enregistrer une Nouvelle Partie</h3>\
             <h4>Joueur Blanc</h4>\
-            <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">XX</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_blanc"></div></div></div>\
+            <div class="game_form" id="blanc"><a id="prenom_blanc">Prenom</a><a> - ID: </a><a id="id_blanc">NONE</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_blanc" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_blanc"></div></div></div>\
             <h4>Joueur Noir</h4>\
-            <div class="game_form" id="noir"><a id="prenom_noir">Prenom</a><a> - ID: </a><a id="id_noir">XX</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_noir" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_noir"></div></div></div>\
+            <div class="game_form" id="noir"><a id="prenom_noir">Prenom</a><a> - ID: </a><a id="id_noir">NONE</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_noir" placeholder="Prenom"><div class="dropdown-content-search" id="drop_content_search_noir"></div></div></div>\
             <h4>Gagnant</h4>\
             <div class="game_form" id="gagnant"><div class="navbar">\
             <a onclick="white_win()">Blanc</a>\
@@ -291,13 +315,14 @@
             <a id="gagnant_id" data>Gagnant | </a>\
             </div>\
             <h4>Ouverture</h4>\
-            <div class="game_form" id="ouverture"></div>\
+            <div class="game_form" id="ouverture"><a id="nom_ouverture">Ouverture</a><div class="dropdown_search"><input class="input_game_form" type="text" id="search_opening" placeholder="Ouverture"><div class="dropdown-content-search" id="drop_content_search_opening"></div></div></div>\
             <h4>Session</h4>\
             <div class="game_form" id="session"></div>\
             <div id="submission"><input type="submit" value="Submit"></div>\
             ';
             document.getElementById("search_blanc").addEventListener('input', (evt) => {updateDropdown_blanc(document.getElementById("search_blanc").value);});
             document.getElementById("search_noir").addEventListener('input', (evt) => {updateDropdown_noir(document.getElementById("search_noir").value);});
+            document.getElementById("search_opening").addEventListener('input', (evt) => {updateDropdown_opening(document.getElementById("search_opening").value);});
         }
     
         async function get_session_form(){
