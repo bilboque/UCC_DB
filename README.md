@@ -11,11 +11,8 @@ Ce projet utilise flask avec my-sql connector pour organiser les routes et la co
 Les tables (relations) de la BD peuvent être importé grace au différentes files .sql dans le dossier chessclub DB. Les données peuvent être importés depuis les .csv (lors de l'import fair attention a l'ID du Joueur DRAW, il doit être a 0, il faut donc le modifier manuellement depuis un SGBD si besoin après l'import).
 Une fois l'instalation effectuer on peut lancer le site grace a la commande "python -m flask run" depuis un interpréteur python.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
 ## Roadmap
-Actuellent: implémentation de la gesion des tournois  en swiss system directement depuis l'application.
+Actuellent: implémentation de la gesion des tournois en swiss system directement depuis l'application.
 
 Prochainement: ...
 
