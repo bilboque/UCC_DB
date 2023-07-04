@@ -1,5 +1,5 @@
 ## UnigeChessClub database
-![LOGO](CODE\static\UCC_Logo2.jpeg)
+![ALT](./CODE/static/UCC_Logo2.jpeg "LOGO")
 
 ## Description
 Developpement de l'interface web du ChessClub de l'Unige.
